@@ -9,7 +9,7 @@ import {
 
 import { Camera, Permissions, FileSystem } from 'expo';
 
-import { Container, Content, Header, Item, Icon, Input, Button } from 'native-base'
+import { Container, Content, Header, Item, Icon, Left, Right, Title, Body, Input, Button } from 'native-base'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const flashModeOrder = {
@@ -25,7 +25,7 @@ class CameraComponent extends Component {
     state = {
         type: Camera.Constants.Type.back,
         flash: 'auto',
-        photoId: 'IMG_' + 1,
+        photoId: 1,
         photos: [],
         path: null,
         permissionsGranted: false,
@@ -49,7 +49,7 @@ class CameraComponent extends Component {
     }
 
     takePicture = async () => {
-        console.log('cheese!');
+        console.log('cheese!', this.state.path);
         if (this.camera) {
             this.camera.takePictureAsync().then(data => {
                 this.setState({ path: data.uri });
@@ -59,6 +59,7 @@ class CameraComponent extends Component {
                 }).then(() => {
                 this.setState({
                     photoId: this.state.photoId + 1,
+                    path: data.uri
                 });
                 Vibration.vibrate();
                 });
@@ -68,7 +69,7 @@ class CameraComponent extends Component {
 
     renderCamera() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, }}>
                 <Camera ref={ref => { this.camera = ref; }}
                         flashMode={this.state.flash}
                         style={{ flex: 1, justifyContent: 'space-between' }} 
@@ -77,7 +78,7 @@ class CameraComponent extends Component {
                     <Header searchBar rounded
                         style={{
                             position: 'absolute', 
-                            backgroundColor: 'transparent',
+                            backgroundColor: '#efc84a',
                             left: 0, 
                             top: 0, 
                             right: 0, 
@@ -85,13 +86,22 @@ class CameraComponent extends Component {
                             alignItems: 'center'
                         }}
                     >
-                        <View style={{ flexDirection: 'row', flex: 2, justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
+
+                            <Image
+                                source={require('../assets/logo.png')}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    marginLeft: 5
+                                }}
+                            />
                             <Button iconLeft transparent>
                                 <Icon
                                     onPress={this.toggleFlash.bind(this)}
                                     name="ios-flash"
                                     style={{ color: 'white', fontWeight: 'bold', fontSize: 35, marginRight: 15}} /> 
-                                <Text style={{ color: 'white', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>{this.state.flash.toUpperCase()}</Text>
+                                <Text style={{ color: 'white', textAlign: 'center', fontSize: 12}}>{this.state.flash.toUpperCase()}</Text>
                             </Button>
                             <Button iconRight transparent>
                                 <Icon
@@ -110,7 +120,7 @@ class CameraComponent extends Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 10, marginBottom: 15, alignItems: 'flex-end' }}>
                         <View style={{ alignItems: 'center' }}> 
                             <MaterialCommunityIcons name="circle-outline" onPress={this.takePicture.bind(this)}
-                                style={{ color: 'white', fontSize: 100 }}
+                                style={{ color: '#efc84a', fontSize: 100 }}
                             ></MaterialCommunityIcons>
                         </View>
                     </View>
@@ -121,17 +131,59 @@ class CameraComponent extends Component {
 
     renderPreviewImage() {
         return (
-            <View style={{ flex: 1 }}>
-              <Image
-                source={{ uri: this.state.path }}
-                style={styles.preview}
-              />
-              <Text
-                style={styles.cancel}
-                onPress={() => this.setState({ path: null })}
-              >Cancel
-              </Text>
-            </View>
+            <Container>
+                <Header style={{ backgroundColor: '#efc84a'}}>
+                    <Left>
+                    <Icon
+                        onPress={() => this.setState({ path: null })}
+                        name="ios-arrow-back"
+                        style={{ color: 'white', fontWeight: 'bold', fontSize: 35, marginRight: 15, marginLeft: 0}} /> 
+                    </Left>
+                    <Body>
+                        <Title style={{ color: 'white', fontSize: 13, fontWeight: 'bold'}}>SEND YOUR FACT</Title>
+                    </Body>
+                    <Right>
+                    <Icon
+                        onPress={() => this.setState({ path: null })}
+                        name="ios-menu"
+                        style={{ color: 'white', fontWeight: 'bold', fontSize: 35, marginRight: 15, marginLeft: 0}} /> 
+                    </Right>
+                </Header>
+                <Image
+                    source={this.state.path}
+                    style={{
+                        width: 300,
+                        height: 500,
+                        marginHorizontal: 36,
+                        marginTop: 36,
+                        borderWidth: 1,
+                        borderColor: '#efefef',
+                    }}
+                />
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 100, paddingHorizontal: 25}}>
+                    <Button iconLeft full transparent onPress={() => this.setState({ path: null })}>
+                        <Icon
+                            name="ios-arrow-dropleft-circle"
+                            style={{ color: '#1766FB', fontWeight: 'bold', fontSize: 35, marginRight: 15, marginLeft: 0}} /> 
+                        <Text style={{ color: '#1766FB', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>Back</Text>
+                    </Button>
+                    <Button iconLeft full transparent>
+                        <Icon
+                            name="ios-create"
+                            style={{ color: 'grey', fontWeight: 'bold', fontSize: 35, marginRight: 15}} /> 
+                        <Text style={{ color: 'grey', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>Add text</Text>
+                    </Button>
+                    <Button iconRight success
+                        style={{
+                            paddingHorizontal: 15,
+                        }}>
+                        <Icon
+                            name="ios-checkmark-outline" style={{ color: 'white', fontSize: 35, fontWeight: 'bold', marginRight: 10}} />
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>Send</Text>                            
+                    </Button>
+                </View>
+                {/* <Text>{ this.state.path }</Text> */}
+            </Container>
           );
     }
 
@@ -161,20 +213,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    preview: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        // height: Dimensions.get('window').height,
-        // width: Dimensions.get('window').width
-    },
-    cancel: {
-        position: 'absolute',
-        right: 20,
-        top: 20,
-        backgroundColor: 'transparent',
-        color: '#FFF',
-        fontWeight: '600',
-        fontSize: 17,
-    }
 });
