@@ -48,26 +48,36 @@ class CameraComponent extends Component {
         });
     }
 
+    // takePicture = async () => {
+    //     if (this.camera) {
+    //         this.camera.takePictureAsync().then(data => {
+    //             this.setState({ path: data.uri });
+    //             console.log('takePicture', data.uri)
+    //             FileSystem.moveAsync({
+    //             from: data.uri,
+    //             to: `${FileSystem.documentDirectory}photos/IMG_${this.state.photoId}.jpg`,
+    //             }).then(() => {
+    //             this.setState({
+    //                 photoId: this.state.photoId + 1,
+    //                 path: data.uri
+    //             });
+    //             });
+    //         });
+    //     }
+    // };
+
     takePicture = async () => {
-        console.log('cheese!', this.state.path);
-        if (this.camera) {
-            this.camera.takePictureAsync().then(data => {
-                this.setState({ path: data.uri });
-                console.log('takePicture', data.uri)
-                FileSystem.moveAsync({
-                from: data.uri,
-                to: `${FileSystem.documentDirectory}photos/IMG_${this.state.photoId}.jpg`,
-                }).then(() => {
-                this.setState({
-                    photoId: this.state.photoId + 1,
-                    path: data.uri
-                });
-                console.log('takePicture2',  `${FileSystem.documentDirectory}photos/IMG_${this.state.photoId}.jpg`);
-                Vibration.vibrate();
-                });
-            });
+        try {
+            const data = await this.camera.takePictureAsync();
+            this.setState({ path: data.uri });
+            Vibration.vibrate();
+            // this.props.updateImage(data.uri);
+        //   console.log('Path to image: ' + data.uri);
+        } catch (err) {
+          console.log('err: ', err);
         }
-    };
+      };
+    
 
     renderCamera() {
         return (
@@ -80,7 +90,7 @@ class CameraComponent extends Component {
                     <Header
                         style={{
                             position: 'absolute', 
-                            backgroundColor: '#efc84a',
+                            backgroundColor: 'transparent',
                             left: 0, 
                             top: 0, 
                             right: 0, 
@@ -122,7 +132,7 @@ class CameraComponent extends Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 10, marginBottom: 15, alignItems: 'flex-end' }}>
                         <View style={{ alignItems: 'center' }}> 
                             <MaterialCommunityIcons name="circle-outline" onPress={this.takePicture.bind(this)}
-                                style={{ color: '#efc84a', fontSize: 100 }}
+                                style={{ color: '#efc84a', fontSize: 100}}
                             ></MaterialCommunityIcons>
                         </View>
                     </View>
@@ -148,34 +158,47 @@ class CameraComponent extends Component {
                     <Right>
                     <Icon
                         name="ios-menu"
-                        style={{ color: 'white', fontWeight: 'bold', fontSize: 35, marginRight: 15, marginLeft: 0}} /> 
+                        style={{ color: '#fff', fontWeight: 'bold', fontSize: 35, marginRight: 15, marginLeft: 0}} /> 
                     </Right>
                 </Header>
                 <Image
-                    source={{ uri: 'https://acme.invoicehome.com/assets/invoice_templates/fr/invoice/165-3c78ee28644560efbaecb13ecfe177814d9fb9c573b9185a37a5a409adc06fa5.png'}}
+                    source={{uri : this.state.path}}
+                    // source={{ uri: 'https://acme.invoicehome.com/assets/invoice_templates/fr/invoice/165-3c78ee28644560efbaecb13ecfe177814d9fb9c573b9185a37a5a409adc06fa5.png'}}
                     style={{
-                        width: '90%',
-                        height: '70%',
-                        marginHorizontal: '5%',
-                        marginTop: 15,
-                        borderWidth: 1,
-                        borderColor: '#efefef',
+                        width: '100%',
+                        height: '100%',
+                        // marginHorizontal: '5%',
+                        // marginTop: 10,
+                        // borderWidth: 1,
+                        // borderColor: '#efefef',
                     }}
                 />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: '5%', paddingHorizontal: 10}}>
+                <View style={{ 
+                        flexDirection: 'row', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center', 
+                        marginVertical: '5%', 
+                        paddingHorizontal: 10,
+                        position: 'absolute', 
+                        backgroundColor: 'transparent',
+                        left: 0, 
+                        bottom: 0, 
+                        right: 0, 
+                        zIndex: 100, 
+                    }}>
                     <Button iconLeft transparent onPress={() => this.setState({ path: null })}>
                         <Icon
                             name="ios-arrow-dropleft-circle"
-                            style={{ color: '#1766FB', fontSize: 48}} /> 
+                            style={{ color: '#efc84a', fontSize: 50}} /> 
                     </Button>
                     <Button iconLeft transparent>
                         <Icon
                             name="ios-create"
-                            style={{ color: 'grey', fontSize: 40}} /> 
+                            style={{ color: '#efc84a', fontSize: 50}} /> 
                     </Button>
-                    <Button iconRight transparent>
+                    <Button iconRight primary style={{ borderRadius: 100 }}>
                         <Icon
-                            name="ios-checkmark-circle" style={{ color: '#51AC4F', fontSize: 50}} />
+                            name="md-send" style={{color: 'white', fontSize: 40, paddingLeft: 20, paddingVertical: 20, paddingRight: 0}} />
                     </Button>
                 </View>
             </Container>
