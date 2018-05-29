@@ -188,17 +188,17 @@ class CameraComponent extends Component {
                     }}>
                     <Button iconLeft transparent onPress={() => this.setState({ path: null })}>
                         <Icon
-                            name="ios-arrow-dropleft-circle"
-                            style={{ color: '#efc84a', fontSize: 50}} /> 
+                            name="ios-arrow-back"
+                            style={{ color: 'white', fontSize: 40}} /> 
                     </Button>
                     <Button iconLeft transparent>
                         <Icon
                             name="ios-create"
-                            style={{ color: '#efc84a', fontSize: 50}} /> 
+                            style={{ color: 'white', fontSize: 40}} /> 
                     </Button>
-                    <Button iconRight primary style={{ borderRadius: 100 }}>
+                    <Button iconRight style={{ borderRadius: 100, width: 53, height: 53 }}>
                         <Icon
-                            name="md-send" style={{color: 'white', fontSize: 40, paddingLeft: 20, paddingVertical: 20, paddingRight: 0}} />
+                            name="md-send" style={{color: 'white', fontSize: 28, paddingLeft: 16}} />
                     </Button>
                 </View>
             </Container>
