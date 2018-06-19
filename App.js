@@ -1,9 +1,7 @@
 	import React from 'react';
 	import { StyleSheet, View } from 'react-native';
-
 	import { Container, Content } from 'native-base'
-
-	import Camera from './Components/Camera'
+	import Navigator from './Components/navigation/Navigator';
 
 	export default class App extends React.Component {
 
@@ -15,7 +13,7 @@
 		return (
 		<Container>
 				<View style={{ flex: 1 }}>
-					<Camera></Camera>
+					<Navigator />
 				</View>
 		</Container>
 		);
