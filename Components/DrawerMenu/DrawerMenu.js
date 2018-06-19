@@ -52,7 +52,7 @@ export default class DrawerMenu extends Component {
      }
      
     renderNavlinkUser() {
-        if (this.state.userIsConnected === true ) {
+        if (this.state.userIsConnected === false ) {
             return (
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 

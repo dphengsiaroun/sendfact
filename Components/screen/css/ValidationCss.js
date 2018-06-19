@@ -16,13 +16,13 @@ const ValidationCss = StyleSheet.create({
 	},
     text: {
 		fontWeight: 'bold',
-		fontSize: 30,
+		fontSize: 35,
 		color: '#222',
 	},
     name: {
 		color: '#222',
 		fontWeight: 'bold',
-		fontSize: 25,
+		fontSize: 35,
 		marginBottom: 40
 	},
 	btn: {

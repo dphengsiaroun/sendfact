@@ -26,15 +26,15 @@ const ProfileCss = StyleSheet.create({
 	},
 	btn: {
 		backgroundColor: '#2488ff',
-		margin: 10
+		margin: 5
 	},
 	btnDanger: {
 		backgroundColor: '#d9534f',
-		margin: 10
+		margin: 5
 	},
 	btnWarning: {
-		backgroundColor: '#EFAD57',
-		margin: 10
+		backgroundColor: '#fcc324',
+		margin: 5
 	}
 	
 });
