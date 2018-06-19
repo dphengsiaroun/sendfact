@@ -24,7 +24,11 @@ const SigninSignUpCss = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	item: {
-		width: 230
+		width: 230,
+	},
+	item2: {
+		width: 230,
+		marginBottom: 10,
 	},
 	textInput: {
 		alignSelf: 'stretch',
@@ -34,7 +38,7 @@ const SigninSignUpCss = StyleSheet.create({
 		borderRadius: 30
 	},
 	btn: {
-		marginTop: 20, 
+		// marginTop: 20, 
 		backgroundColor: '#2488ff'
 	},
 	btnOutline: {

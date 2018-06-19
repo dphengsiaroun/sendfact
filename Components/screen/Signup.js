@@ -105,7 +105,7 @@ export default class Signup extends Component {
 							<Label style={{color: 'grey'}}>Add your Username</Label>
 							<Input style={{color: 'grey'}} onChangeText={(username) => this.setState({username})}/>
 						</Item>
-						<Item style={SigninSignUpCss.item} floatingLabel last>
+						<Item style={SigninSignUpCss.item2} floatingLabel last>
 							<Label style={{color: 'grey'}}>Add your Password</Label>
 							<Input style={{color: 'grey'}} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
 						</Item>

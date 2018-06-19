@@ -21,27 +21,32 @@ import {
 	Right 
 } from 'native-base';
 import { Icon } from 'react-native-elements';
+import firebase from 'firebase';
+
 import SigninSignUpCss from './css/SigninSignUpCss';
 
 export default class Signin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '',
+			email: '',
 			password: '',
-			userIsConnected: false
+			userIsConnected: false,
+			errorMessage: null,
+			redirectToReferrer: false
 		};
 	}
 
 	componentDidMount() {
-		this._loadInitialState().done();
+		this.isAuthenticated().done();
 	}
 
-	_loadInitialState = async () => {
-		const value = await AsyncStorage.getItem('user');
-		// alert(value);
-		if (value !== null) {
-			this.props.navigation.navigate('Home');
+	isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('user');
+		console.log('token', token);
+		if (token) {
+			this.props.navigation.navigate('Profile');
+			this.setState({ redirectToReferrer: true });
 			Alert.alert(
 				'Information',
 				'You have been connected',
@@ -50,41 +55,25 @@ export default class Signin extends Component {
 	}
 
 	login = () => {
-		const username = this.state.username;
-		const password = this.state.password;
-		fetch('http://localhost:3000/users/retrieve', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				username: this.state.username,
-				password: this.state.password
+		const { email, password } = this.state;
+   		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then((response) => {
+				console.log('response', response);
+				if (this.state.errorMessage === null) {
+					AsyncStorage.setItem('user', response.user.l);
+					this.setState({userIsConnected: true});
+					this.props.navigation.navigate('Camera');
+				} 
 			})
-		})
-		.then((response) => response.json())
-		.then((res) => {
-			if (res.success === true) {
-				AsyncStorage.setItem('user', res.user);
-				this.props.userIsConnected = true;
-				this.props.navigation.navigate('Home');
-			} else {
-				Alert.alert(
-					'Information',
-					res.message,
-					[
-					  {text: 'OK', onPress: () => console.log('OK Pressed')},
-					],
-					{ cancelable: false }
-				  )
-				console.log(res);
-			}
-		})
-		.done();
+			.catch(error => {
+				this.setState({ errorMessage: error.message })
+				console.log('error', error, this.state);
+			});
 	}
 
-	render() {		
+	render() {
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
@@ -93,7 +82,7 @@ export default class Signin extends Component {
 						name="chevron-left"
 						type='feather'
 						color="white"
-						onPress={() => this.props.navigation.goBack()}/>
+						onPress={() => this.props.navigation.history.goBack()}/>
 				</Left>
 				<Body>
 					<Title style={{color: 'white'}}>Sign In</Title>
@@ -112,13 +101,24 @@ export default class Signin extends Component {
 					<Text style={SigninSignUpCss.header}>Sign In</Text>
 					<Form>
 						<Item style={SigninSignUpCss.item} floatingLabel>
-							<Label style={{color: 'grey'}}>Username</Label>
-							<Input style={{color: 'grey'}} onChangeText={(username) => this.setState({username})}/>
+							<Label style={{color: 'grey'}}>Email</Label>
+							<Input 
+								style={{color: 'grey'}} 
+								onChangeText={(email) => this.setState({email})} 
+								value={this.state.email}/>
 						</Item>
-						<Item style={SigninSignUpCss.item} floatingLabel last>
+						<Item style={SigninSignUpCss.item2} floatingLabel last>
 							<Label style={{color: 'grey'}}>Password</Label>
-							<Input style={{color: 'grey'}} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+							<Input 
+								style={{color: 'grey'}} 
+								secureTextEntry={true} 
+								onChangeText={(password) => this.setState({password})} 
+								value={this.state.password}/>
 						</Item>
+						{this.state.errorMessage &&
+						<Text style={{ color: 'red', marginBottom: 15}}>
+							{this.state.errorMessage}
+						</Text>}
 						<Button block style={SigninSignUpCss.btn} onPress={this.login.bind(this)}>
 							<Text style={{color: '#fff'}}>Sign In</Text>
 						</Button>

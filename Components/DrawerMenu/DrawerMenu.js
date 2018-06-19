@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import firebase from 'firebase';
 
 import DrawerMenuCss from './css/DrawerMenuCss';
 
@@ -20,7 +21,8 @@ export default class DrawerMenu extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-			userIsConnected: false
+            userIsConnected: false,
+            currentUser: null
 		}
     }
     
@@ -49,10 +51,17 @@ export default class DrawerMenu extends Component {
 				error
 			);
 		}
-     }
-     
-    renderNavlinkUser() {
-        if (this.state.userIsConnected === false ) {
+    }
+    
+    isAuthenticated() {
+        const token = AsyncStorage.getItem('user');
+        return token && token.length > 5;
+    }
+
+    renderIfUserIsConnected() {
+            const userIsConnected = this.isAuthenticated();
+            console.log('userIsConnected', userIsConnected);
+            if (userIsConnected === false) {
             return (
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
@@ -135,64 +144,7 @@ export default class DrawerMenu extends Component {
                  </View>
              </View>
             <ScrollView style={DrawerMenuCss.scrollContainer}>
-                {this.renderNavlinkUser()}
-                {/* <View style={DrawerMenuCss.textWithIcon}>
-                    <View style={DrawerMenuCss.withIcon}>                 
-                        <TouchableOpacity onPress={(this.navigateToScreen('Signin'))} style={DrawerMenuCss.withIcon}>
-                            <Icon
-                                style={DrawerMenuCss.iconWithText}
-                                name='user'
-                                type='font-awesome'
-                                color='hsla(46, 84%, 61%, 1)'
-                            />
-                            <Text style={DrawerMenuCss.text}>Sign in</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Icon
-                        style={DrawerMenuCss.rightIcon}
-                        name="angle-right"
-                        type='font-awesome'
-                        color="#222"
-                    />
-                </View>
-                <View style={DrawerMenuCss.textWithIcon}>
-                    <View style={DrawerMenuCss.withIcon}>
-                        <TouchableOpacity onPress={(this.navigateToScreen('Profile'))} style={DrawerMenuCss.withIcon}>
-                            <Icon
-                                style={DrawerMenuCss.iconWithText}
-                                name='user'
-                                type='font-awesome'
-                                color='hsla(46, 84%, 61%, 1)'
-                            />
-                            <Text style={DrawerMenuCss.text}>Profile</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Icon
-                        style={DrawerMenuCss.rightIcon}
-                        name="angle-right"
-                        type='font-awesome'
-                        color="#222"
-                    />
-                </View>
-                <View style={DrawerMenuCss.textWithIcon}>
-                    <View style={DrawerMenuCss.withIcon}>
-                        <TouchableOpacity onPress={() => this.signout()} style={DrawerMenuCss.withIcon}>
-                            <Icon
-                                style={DrawerMenuCss.iconWithText}
-                                name='power-off'
-                                type='font-awesome'
-                                color='hsla(46, 84%, 61%, 1)'
-                            />
-                            <Text style={DrawerMenuCss.text}>Sign out</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Icon
-                        style={DrawerMenuCss.rightIcon}
-                        name="angle-right"
-                        type='font-awesome'
-                        color="#222"
-                    />
-                </View> */}
+                {this.renderIfUserIsConnected()}
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>
                         <TouchableOpacity onPress={(this.navigateToScreen('Camera'))} style={DrawerMenuCss.withIcon}>

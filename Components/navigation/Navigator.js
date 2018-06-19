@@ -1,9 +1,9 @@
 
-import Signin from '../screen/Signin';
-import Signup from '../screen/Signup';
-import Profile from '../screen/Profile';
-import Camera from '../screen/Camera';
-import Validation from '../screen/Validation';
+import Signin from '../Screen/Signin';
+import Signup from '../Screen/Signup';
+import Profile from '../Screen/Profile';
+import Camera from '../Screen/Camera';
+import Validation from '../Screen/Validation';
 
 import DrawerMenu from '../DrawerMenu/DrawerMenu';
 import { DrawerNavigator } from 'react-navigation';

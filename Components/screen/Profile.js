@@ -19,6 +19,7 @@ import {
 } from 'native-base';
 import { Icon } from 'react-native-elements';
 import ProfileCss from './css/ProfileCss';
+import firebase from 'firebase';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -27,16 +28,8 @@ export default class Profile extends Component {
 			username: '',
 			password: '',
 			userIsConnected: true,
+			redirectToReferrer: false
 		};
-	}
-
-	componentWillMount() {
-		const userIsConnected = AsyncStorage.getItem('user');
-		if (userIsConnected) {
-			this.setState({
-				userIsConnected: true
-			});
-		}
 	}
 
 	deleteUser() {
@@ -73,9 +66,12 @@ export default class Profile extends Component {
 		.done();
 	}
 
+	isAuthenticated() {
+        const token = AsyncStorage.getItem('token');
+        return token && token.length > 5;
+    }
 
 	render() {
-		console.log('profile', this.props.navigation);
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
@@ -101,12 +97,12 @@ export default class Profile extends Component {
 				<Image style={ProfileCss.avatar} source={require('../img/user.png')} />				
 				<Text style={ProfileCss.text}>Welcome</Text>
 				<Text style={ProfileCss.name}>Dany !</Text>
-					<Button block info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Home')}>
+					<Button block info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
 						<Icon 
-							name='home'
+							name='camera'
 							type="font-awesome" 
 							color="white"/>
-						<Text>Home</Text>
+						<Text>Go to camera</Text>
 					</Button>
 					<Button block style={ProfileCss.btnWarning} onPress={() => this.props.navigation.navigate('Signin')}>
 						<Icon 

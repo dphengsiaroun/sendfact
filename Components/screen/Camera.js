@@ -38,9 +38,9 @@ class CameraComponent extends Component {
     }
 
     componentDidMount() {
-        FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
-          console.log(e, 'Directory exists');
-        });
+        // FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
+        //   console.log(e, 'Directory exists');
+        // });
     }
 
     // toggleFlash() {
