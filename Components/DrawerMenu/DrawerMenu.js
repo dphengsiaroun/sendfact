@@ -53,15 +53,17 @@ export default class DrawerMenu extends Component {
 		}
     }
     
-    isAuthenticated() {
-        const token = AsyncStorage.getItem('user');
-        return token && token.length > 5;
-    }
+    isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('user');
+		console.log('token', token);
+		if (token) {
+			this.props.navigation.navigate('Profile');
+			this.setState({ redirectToReferrer: true });
+		}
+	}
 
     renderIfUserIsConnected() {
-            const userIsConnected = this.isAuthenticated();
-            console.log('userIsConnected', userIsConnected);
-            if (userIsConnected === false) {
+            if (this.state.currentUser === true) {
             return (
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
@@ -105,25 +107,6 @@ export default class DrawerMenu extends Component {
                             color="#222"
                         />
                     </View>
-                    <View style={DrawerMenuCss.textWithIcon}>
-                        <View style={DrawerMenuCss.withIcon}>
-                            <TouchableOpacity onPress={() => this.signout()} style={DrawerMenuCss.withIcon}>
-                                <Icon
-                                    style={DrawerMenuCss.iconWithText}
-                                    name='power-off'
-                                    type='font-awesome'
-                                    color='hsla(46, 84%, 61%, 1)'
-                                />
-                                <Text style={DrawerMenuCss.text}>Sign out</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <Icon
-                            style={DrawerMenuCss.rightIcon}
-                            name="angle-right"
-                            type='font-awesome'
-                            color="#222"
-                        />
-                    </View>
                 </View>
             );
         }
@@ -136,11 +119,18 @@ export default class DrawerMenu extends Component {
         <View style={DrawerMenuCss.menu}>
              <View style={DrawerMenuCss.avatarContainer}>
                  <View style={DrawerMenuCss.avatarImage}>
-                     <Image 
-                         style={DrawerMenuCss.avatar}
-                         source={require('../../assets/logo.png')}
-                     />
-                     <Text style={DrawerMenuCss.profile}>SendFact</Text>
+                    <Image 
+                        style={DrawerMenuCss.avatar}
+                        source={require('../../assets/logo.png')}
+                    />
+                    <Text style={DrawerMenuCss.profile}>SendFact</Text>
+                    <Icon
+                        onPress={() => this.signout()}
+                        style={DrawerMenuCss.iconWithText}
+                        name='power-off'
+                        type='font-awesome'
+                        color='white'
+                    />
                  </View>
              </View>
             <ScrollView style={DrawerMenuCss.scrollContainer}>

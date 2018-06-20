@@ -36,13 +36,7 @@ export default class Validation extends Component {
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
-				<Left>
-					<Icon 
-						name="chevron-left"
-						type='feather'
-						color="white"
-						onPress={() => this.props.navigation.goBack()}/>
-				</Left>
+				<Left/>
 				<Body>
 					<Title style={{color: 'white'}}>Validation</Title>
 				</Body>

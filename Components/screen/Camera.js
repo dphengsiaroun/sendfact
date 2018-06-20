@@ -37,28 +37,32 @@ class CameraComponent extends Component {
         this.setState({ permissionsGranted: status === 'granted' });
     }
 
-    componentDidMount() {
-        // FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
-        //   console.log(e, 'Directory exists');
-        // });
+    // takePicture = async () => {
+    //     try {
+    //         const data = await this.camera.takePictureAsync()
+    //             this.setState({ path: data.uri });
+    //             // this.props.updateImage(data.uri);
+    //             console.log('Path to image: ', data.uri);
+    //     } catch (err) {
+    //       console.log('err: ', err);
+    //     }
+    //   };
+
+    takePicture() {
+        this.camera.takePictureAsync().then((data) => {
+            var imagePath = data.uri;
+            console.log('imagePath', imagePath);
+            this.props.navigation.navigate('ImagePreview', {
+                imagePath: imagePath,
+              });
+         }).catch((err)=> console.error(err));
     }
+    
 
-    // toggleFlash() {
-    //     this.setState({
-    //       flash: flashModeOrder[this.state.flash],
-    //     });
-    // }
 
-    takePicture = async () => {
-        try {
-            const data = await this.camera.takePictureAsync()
-                this.setState({ path: data.uri });
-                // this.props.updateImage(data.uri);
-                // console.log('Path to image: ' + data.uri);
-        } catch (err) {
-          console.log('err: ', err);
-        }
-      };
+    addText() {
+        console.log('Add Text');
+    }
     
 
     renderCamera() {
@@ -88,22 +92,6 @@ class CameraComponent extends Component {
                                     fontSize: 17
                                 }}>SendFact</Text>
                         </Left>
-                        {/* <Button iconLeft transparent>
-                            <Icon
-                                onPress={this.toggleFlash.bind(this)}
-                                name="ios-flash"
-                                style={{ 
-                                    color: 'white', 
-                                    fontSize: 30, 
-                                    marginRight: 5, 
-                                    paddingHorizontal: 10}} /> 
-                            <Text style={{
-                                color: 'white', 
-                                textAlign: 'center', 
-                                fontSize: 12}}>
-                                {this.state.flash.toUpperCase()}
-                            </Text>
-                        </Button> */}
                         <Right>
                             <Icon
                                 name="menu"
@@ -165,7 +153,6 @@ class CameraComponent extends Component {
                 </Header>
                 <Image
                     source={{uri : this.state.path}}
-                    // source={{ uri: 'https://acme.invoicehome.com/assets/invoice_templates/fr/invoice/165-3c78ee28644560efbaecb13ecfe177814d9fb9c573b9185a37a5a409adc06fa5.png'}}
                     style={{
                         width: '90%',
                         height: '71%',
@@ -184,17 +171,20 @@ class CameraComponent extends Component {
                         position: 'absolute', 
                         backgroundColor: '#fff',
                         left: 0, 
-                        bottom: 0, 
+                        bottom: 10, 
                         right: 0, 
                         zIndex: 100, 
                     }}>
+                        <Button transparent onPress={() => this.setState({ path: null })}>                    
                         <Icon
                         raised
                             name="chevron-left"
                             type='feather'
                             color="#828282"
                             size={25}
-                            onPress={() => this.setState({ path: null })}/> 
+                        />
+                        </Button>                        
+                        <Button transparent onPress={() => this.addText()}>
                         <Icon
                         raised
                             name="pencil"
@@ -202,15 +192,17 @@ class CameraComponent extends Component {
                             color="#828282"
                             size={25}
                             /> 
+                        </Button>                        
+                        <Button transparent onPress={() => this.props.navigation.navigate("Validation")}>
                         <Icon
                             reverse
                             raised
-                            onPress={() => this.props.navigation.navigate("Validation")}
                             name="paper-plane"
                             type="entypo"
                             color="#1766FB"
                             size={25}
                         />
+                        </Button>
                 </View>
             </Container>
           );

@@ -28,8 +28,22 @@ export default class Profile extends Component {
 			username: '',
 			password: '',
 			userIsConnected: true,
+			currentUser: null,
 			redirectToReferrer: false
 		};
+	}
+
+	isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('user');
+		console.log('token', token);
+		if (token) {
+			this.props.navigation.navigate('Profile');
+			this.setState({ redirectToReferrer: true });
+			Alert.alert(
+				'Information',
+				'You have been connected',
+			)
+		}
 	}
 
 	deleteUser() {
@@ -66,12 +80,8 @@ export default class Profile extends Component {
 		.done();
 	}
 
-	isAuthenticated() {
-        const token = AsyncStorage.getItem('token');
-        return token && token.length > 5;
-    }
-
 	render() {
+		const { currentUser } = this.state;
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
@@ -96,7 +106,7 @@ export default class Profile extends Component {
 			<View style={ProfileCss.container}>
 				<Image style={ProfileCss.avatar} source={require('../img/user.png')} />				
 				<Text style={ProfileCss.text}>Welcome</Text>
-				<Text style={ProfileCss.name}>Dany !</Text>
+				<Text style={ProfileCss.name}> !</Text>
 					<Button block info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
 						<Icon 
 							name='camera'
