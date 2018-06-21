@@ -35,7 +35,7 @@ export default class DrawerMenu extends Component {
 
     signout(){
 		try {
-			AsyncStorage.removeItem('user'); // to clear the token 
+			AsyncStorage.removeItem('user_is_signed_in'); // to clear the token 
 			Alert.alert(
 				'Déconnexion',
 				'Vous êtes bien déconnecté.'
@@ -54,7 +54,7 @@ export default class DrawerMenu extends Component {
     }
     
     isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user');
+		const token = await AsyncStorage.getItem('user_is_signed_in');
 		console.log('token', token);
 		if (token) {
 			this.props.navigation.navigate('Profile');
@@ -65,7 +65,7 @@ export default class DrawerMenu extends Component {
 
     renderIfUserIsConnected() {
         console.log('this.state.userIsConnected', this.state.userIsConnected);
-            if (this.state.userIsConnected === false) {
+            if (this.state.userIsConnected === true) {
             return (
                 <View>
                 <View style={DrawerMenuCss.textWithIcon}>

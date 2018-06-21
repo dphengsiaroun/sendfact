@@ -34,14 +34,14 @@ export default class Profile extends Component {
 	}
 
 	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user');
+		const token = await AsyncStorage.getItem('user_is_signed_in');
 		console.log('token', token);
 		if (token) {
-			this.props.navigation.navigate('Profile');
-			this.setState({ redirectToReferrer: true });
+			this.setState({ userIsConnected: false });
+			this.props.navigation.navigate('Sign in');
 			Alert.alert(
-				'Information',
-				'You have been connected',
+				'Connexion',
+				'Veuillez vous connecter.',
 			)
 		}
 	}

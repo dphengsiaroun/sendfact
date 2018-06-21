@@ -16,7 +16,6 @@ import ImageZoom from 'react-native-image-pan-zoom';
 
 import { Container, Content, Header, Item, Left, Right, Title, Body, Form, Textarea, Input, Label, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
-import { relative } from "path";
 
 class ImagePreview extends Component {
 
@@ -41,7 +40,7 @@ class ImagePreview extends Component {
                 visible={this.state.ModalVisibleStatus}
                 transparent={true}
                 onRequestClose={ () =>  this.ShowModalFunction() }>
-                <View style={{ backgroundColor: '#fff', position:'absolute', bottom: 0, left: 0, right: 0}}>
+                <View style={{ backgroundColor: '#fff', position:'absolute', bottom: 0, left: 0, right: 0, borderTopStartRadius: 30, borderTopRightRadius: 30}}>
                     {/* <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
                         <Left>
                             <Button transparent
@@ -58,19 +57,21 @@ class ImagePreview extends Component {
                         </Body>
                         <Right/>
                     </Header> */}
-                    <Button transparent
+                    <Button transparent block 
                         style={{
                             position: 'absolute',
-
+                            right: 10,
+                            zIndex: 100,
                         }}
                         onPress={() => this.setState({ ModalVisibleStatus: false })}>
                         <Icon 
-                            name="angle-left"
-                            type='font-awesome'
-                            color="black"
-                            size={30}/>
+                            name="close-o"
+                            type='evilicon'
+                            color="#8996A0"
+                            size={30}
+                            />
                     </Button>
-                    <Form style={{padding: 20}}>
+                    <Form style={{paddingHorizontal: 20, paddingTop: 30, paddingBottom: 25}}>
                         <Label 
                         style={{
                             fontSize: 14, 
