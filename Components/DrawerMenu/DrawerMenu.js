@@ -21,10 +21,13 @@ export default class DrawerMenu extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            userIsConnected: false,
-            currentUser: null
+            userIsConnected: false
 		}
     }
+
+    componentDidMount() {
+		this.isAuthenticated().done();
+	}
     
     navigateToScreen = (route) => () => {
         const navigateAction = NavigationActions.navigate({
@@ -32,6 +35,17 @@ export default class DrawerMenu extends Component {
         });
         this.props.navigation.dispatch(navigateAction);
     }
+
+    isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('user_is_signed_in');
+		console.log('token', token);
+		if (token === null) {
+			this.setState({ userIsConnected: false });
+			this.props.navigation.navigate('Camera');
+		} else {
+			this.setState({ userIsConnected: true });            
+        }
+	}
 
     signout(){
 		try {
@@ -52,20 +66,10 @@ export default class DrawerMenu extends Component {
 			);
 		}
     }
-    
-    isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user_is_signed_in');
-		console.log('token', token);
-		if (token) {
-			this.props.navigation.navigate('Profile');
-			this.setState({ redirectToReferrer: true, userIsConnected: true });
-        }
-        return token;
-	}
 
     renderIfUserIsConnected() {
         console.log('this.state.userIsConnected', this.state.userIsConnected);
-            if (this.state.userIsConnected === true) {
+            if (this.state.userIsConnected === false) {
             return (
                 <View>
                 <View style={DrawerMenuCss.textWithIcon}>
@@ -89,7 +93,7 @@ export default class DrawerMenu extends Component {
                 </View>
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
-                        <TouchableOpacity onPress={(this.navigateToScreen('Signin'))} style={DrawerMenuCss.withIcon}>
+                        <TouchableOpacity onPress={(this.navigateToScreen('Signup'))} style={DrawerMenuCss.withIcon}>
                             <Icon
                                 style={DrawerMenuCss.iconWithText}
                                 name='user-plus'

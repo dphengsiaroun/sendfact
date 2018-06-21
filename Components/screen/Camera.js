@@ -59,14 +59,14 @@ class CameraComponent extends Component {
     }
     
     isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user');
+		const token = await AsyncStorage.getItem('user_is_signed_in');
 		console.log('token', token);
 		if (token) {
 			this.props.navigation.navigate('Profile');
 			this.setState({ redirectToReferrer: true, userIsConnected: true });
 			Alert.alert(
-				'Information',
-				'You have been connected',
+				'Connexion',
+				'Vous êtes bien connecté.',
 			)
 		}
 	}
@@ -116,14 +116,14 @@ class CameraComponent extends Component {
                     <View style={{ 
                             flexDirection: 'row', 
                             justifyContent: 'center', 
-                            backgroundColor: 'hsla(0, 0%, 0%, 0.8)', 
+                            backgroundColor: 'hsla(0, 0%, 0%, 1)', 
                             paddingHorizontal: 10, 
                             marginBottom: 0,
                             paddingVertical: 10,
                             alignItems: 'flex-end' }}>
                         <View style={{ alignItems: 'center' }}> 
                             <MaterialCommunityIcons name="circle-outline" onPress={this.takePicture.bind(this)}
-                                style={{ color: '#fff', fontSize: 90}}
+                                style={{ color: '#fff', fontSize: 70}}
                             ></MaterialCommunityIcons>
                         </View>
                     </View>

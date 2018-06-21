@@ -12,7 +12,6 @@ import {
 import { Camera, Permissions, FileSystem } from 'expo';
 
 import ImageViewer from 'react-native-image-zoom-viewer';
-import ImageZoom from 'react-native-image-pan-zoom';
 
 import { Container, Content, Header, Item, Left, Right, Title, Body, Form, Textarea, Input, Label, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
@@ -23,14 +22,19 @@ class ImagePreview extends Component {
         super(props);
         this.state = {
             ModalVisibleStatus: false,
-            note: '' 
+            comment: '' 
         };
         console.log('props', this.props)
    }
 
-    addText() {
-        console.log('Add Text');
-        this.setState({ModalVisibleStatus: true});   
+    newComment() {
+        console.log('New comment');
+        this.setState({ModalVisibleStatus: !this.state.ModalVisibleStatus});   
+    }
+
+    addComment() {
+        console.log('Add comment');
+        this.setState({ModalVisibleStatus: !this.state.ModalVisibleStatus});        
     }
 
     renderViewModal() {
@@ -38,13 +42,13 @@ class ImagePreview extends Component {
             <Modal
                 style={{ backgroundColor: '#000'}}
                 visible={this.state.ModalVisibleStatus}
-                transparent={true}
+                transparent={false}
                 onRequestClose={ () =>  this.ShowModalFunction() }>
-                <View style={{ backgroundColor: '#fff', position:'absolute', bottom: 0, left: 0, right: 0, borderTopStartRadius: 30, borderTopRightRadius: 30}}>
-                    {/* <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
+                <View style={{ backgroundColor: '#fff'}}>
+                    <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
                         <Left>
                             <Button transparent
-                                onPress={() => this.setState({ ModalVisibleStatus: false })}>
+                                onPress={() => this.setState({ ModalVisibleStatus: !this.state.ModalVisibleStatus })}>
                                 <Icon 
                                     name="angle-left"
                                     type='font-awesome'
@@ -56,21 +60,7 @@ class ImagePreview extends Component {
                             <Title style={{color: 'white', fontSize: 15}}>Commentaire</Title>
                         </Body>
                         <Right/>
-                    </Header> */}
-                    <Button transparent block 
-                        style={{
-                            position: 'absolute',
-                            right: 10,
-                            zIndex: 100,
-                        }}
-                        onPress={() => this.setState({ ModalVisibleStatus: false })}>
-                        <Icon 
-                            name="close-o"
-                            type='evilicon'
-                            color="#8996A0"
-                            size={30}
-                            />
-                    </Button>
+                    </Header>
                     <Form style={{paddingHorizontal: 20, paddingTop: 30, paddingBottom: 25}}>
                         <Label 
                         style={{
@@ -99,7 +89,7 @@ class ImagePreview extends Component {
                             style={{
                                 paddingHorizontal: 5
                             }}
-                            onPress={() => console.log('hello')}>
+                            onPress={() => this.addComment()}>
                             <Text 
                             style={{
                                 color: 'white',
@@ -151,16 +141,6 @@ class ImagePreview extends Component {
                             onPress={() => this.props.navigation.navigate("DrawerOpen")}/> 
                         </Right>
                     </Header>
-                    {/* <ImageZoom 
-                        cropWidth={Dimensions.get('window').width}
-                        cropHeight={Dimensions.get('window').height}
-                       imageWidth={300}
-                       imageHeight={400}
-                       style={{position: 'absolute', top: 10}}
-                    >
-                        <Image style={{width:300, height:400}}
-                            source={images}/>
-                    </ImageZoom> */}
                     <ImageViewer style={{height: 400, marginHorizontal: 10, marginTop: 10, marginBottom: 90}} renderIndicator={() => null} imageUrls={images}/>
                     {this.renderViewModal()}
                     <View style={{ 
@@ -177,32 +157,32 @@ class ImagePreview extends Component {
                             zIndex: 100, 
                         }}>
                             <Button transparent onPress={() => this.props.navigation.navigate('Camera')}>                    
-                            <Icon
-                            raised
-                                name="chevron-left"
-                                type='feather'
-                                color="#828282"
-                                size={25}
-                            />
+                                <Icon
+                                    raised
+                                    name="chevron-left"
+                                    type='feather'
+                                    color="#828282"
+                                    size={25}
+                                />
                             </Button>                        
-                            <Button transparent onPress={() => this.addText()}>
-                            <Icon
-                            raised
-                                name="pencil"
-                                type="font-awesome"
-                                color="#828282"
-                                size={25}
+                            <Button transparent onPress={() => this.newComment()}>
+                                <Icon
+                                    raised
+                                    name="pencil"
+                                    type="font-awesome"
+                                    color="#828282"
+                                    size={25}
                                 /> 
                             </Button>                        
                             <Button transparent onPress={() => this.props.navigation.navigate("Validation")}>
-                            <Icon
-                                reverse
-                                raised
-                                name="paper-plane"
-                                type="entypo"
-                                color="#1766FB"
-                                size={25}
-                            />
+                                <Icon
+                                    reverse
+                                    raised
+                                    name="paper-plane"
+                                    type="entypo"
+                                    color="#1766FB"
+                                    size={25}
+                                />
                             </Button>
                     </View>
                 </Container>

@@ -100,7 +100,7 @@ export default class Signup extends Component {
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
-					<Title style={{color: 'white'}}>Sign Up</Title>
+					<Title style={{color: 'white'}}>S'inscrire</Title>
 				</Body>
 				<Right>
 					<Icon 

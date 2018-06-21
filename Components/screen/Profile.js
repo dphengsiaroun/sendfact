@@ -4,6 +4,7 @@ import {
 	ImageBackground, 
 	View,
 	Image,
+	Alert,
 	AsyncStorage
 } from 'react-native';
 import { 
@@ -28,17 +29,20 @@ export default class Profile extends Component {
 			username: '',
 			password: '',
 			userIsConnected: true,
-			currentUser: null,
-			redirectToReferrer: false
 		};
 	}
+
+	componentDidMount() {
+		this.isAuthenticated().done();
+	}
+
 
 	isAuthenticated = async () => {
 		const token = await AsyncStorage.getItem('user_is_signed_in');
 		console.log('token', token);
-		if (token) {
+		if (token === null) {
 			this.setState({ userIsConnected: false });
-			this.props.navigation.navigate('Sign in');
+			this.props.navigation.navigate('Signin');
 			Alert.alert(
 				'Connexion',
 				'Veuillez vous connecter.',
@@ -46,42 +50,7 @@ export default class Profile extends Component {
 		}
 	}
 
-	deleteUser() {
-		const username = this.state.username;
-		const password = this.state.password;
-		fetch('http://localhost:3000/users/', {
-			method: 'GET',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				username: this.state.username,
-				password: this.state.password
-			})
-		})
-		.then((response) => response.json())
-		.then((res) => {
-			if (res.success === true) {
-				AsyncStorage.setItem('user', res.user);
-				this.props.navigation.navigate('Home');
-			} else {
-				Alert.alert(
-					'Information',
-					res.message,
-					[
-					  {text: 'OK', onPress: () => console.log('OK Pressed')},
-					],
-					{ cancelable: false }
-				  )
-				console.log(res);
-			}
-		})
-		.done();
-	}
-
 	render() {
-		const { currentUser } = this.state;
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
@@ -115,7 +84,7 @@ export default class Profile extends Component {
 							color="white"/>
 						<Text>Go to camera</Text>
 					</Button>
-					<Button block style={ProfileCss.btnWarning} onPress={() => this.props.navigation.navigate('Signin')}>
+					{/* <Button block style={ProfileCss.btnWarning} onPress={() => this.props.navigation.navigate('Signin')}>
 						<Icon 
 							name='cog' 
 							type="font-awesome" 
@@ -128,7 +97,7 @@ export default class Profile extends Component {
 							type="font-awesome"
 							color="white" />
 						<Text>Delete my account</Text>
-					</Button>
+					</Button> */}
 			</View>
 			</React.Fragment>
 		);

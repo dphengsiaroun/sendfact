@@ -1,10 +1,18 @@
-	import React from 'react';
-	import { StyleSheet, View } from 'react-native';
-	import { Container, Content } from 'native-base'
-	import Navigator from './Components/Navigation/Navigator';
-	import firebase from 'firebase';
+import React from 'react';
+import { StyleSheet, View, AsyncStorage } from 'react-native';
+import { Container, Content } from 'native-base'
+import Navigator from './Components/Navigation/Navigator';
+import firebase from 'firebase';
+import { 
+	API_KEY,
+	AUTH_DOMAIN, 
+	DATABASE_URL, 
+	PROJECT_ID, 
+	STORAGE_BUCKET, 
+	MESSAGING_SENDER_ID 
+} from './env/config'
 
-	export default class App extends React.Component {
+export default class App extends React.Component {
 
 	constructor() {
 		super();
@@ -12,24 +20,21 @@
 
 	componentWillMount() {
 		var config = {
-			apiKey: "AIzaSyDK9f2Dh5fItWfpLmNeqCzvdSCFuy7N9Bk",
-			authDomain: "authentication-5a323.firebaseapp.com",
-			databaseURL: "https://authentication-5a323.firebaseio.com",
-			projectId: "authentication-5a323",
-			storageBucket: "authentication-5a323.appspot.com",
-			messagingSenderId: "647683589919"
-		  };
+			apiKey: API_KEY,
+			authDomain: AUTH_DOMAIN,
+			databaseURL: DATABASE_URL,
+			projectId: PROJECT_ID,
+			storageBucket: STORAGE_BUCKET,
+			messagingSenderId: MESSAGING_SENDER_ID
+			};
 		firebase.initializeApp(config);
 	}
 
 	render() {
+		console.log('this.state App.js', this.state);
 		return (
-		// <Container>
-		// 		<View style={{ flex: 1 }}>
-					<Navigator />
-		// 		</View>
-		// </Container>
+			<Navigator />
 		);
 	}
-	}
+}
 
