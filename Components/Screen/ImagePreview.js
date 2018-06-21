@@ -35,7 +35,7 @@ class ImagePreview extends Component {
                 visible={this.state.ModalVisibleStatus}
                 transparent={false}
                 onRequestClose={ () =>  this.ShowModalFunction() }>
-                <View style={{ flex: 1, backgroundColor: '#222' }}>
+                <View style={{ flex: 1, backgroundColor: '#fff' }}>
                 <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
                         <Left>
                             <Icon 
@@ -62,7 +62,7 @@ class ImagePreview extends Component {
                             top: '45%',
                             left: '5%',
                             fontSize: 14, 
-                            color: 'white'
+                            color: 'black'
                         }}>Add your Text</Label>
                     <TextInput 
                         style={{
@@ -73,9 +73,12 @@ class ImagePreview extends Component {
                             width: '90%', 
                             fontSize: 24, 
                             fontWeight: '600',
-                            borderWidth: 1,
+                            borderWidth: 2,
+                            borderTopWidth: 0,
+                            borderLeftWidth: 0,
+                            borderRightWidth: 0,
                             borderBottomColor: 'hsla(46, 84%, 61%, 1)',
-                            color: 'white'}}/>
+                            color: 'black'}}/>
                 </View>
             </Modal>
         );

@@ -106,7 +106,7 @@ export default class Profile extends Component {
 			<View style={ProfileCss.container}>
 				<Image style={ProfileCss.avatar} source={require('../img/user.png')} />				
 				<Text style={ProfileCss.text}>Welcome</Text>
-				<Text style={ProfileCss.name}> !</Text>
+				<Text style={ProfileCss.name}>Dany !</Text>
 					<Button block info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
 						<Icon 
 							name='camera'
