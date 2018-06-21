@@ -67,6 +67,7 @@ export default class DrawerMenu extends Component {
         console.log('this.state.userIsConnected', this.state.userIsConnected);
             if (this.state.userIsConnected === false) {
             return (
+                <View>
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
                         <TouchableOpacity onPress={(this.navigateToScreen('Signin'))} style={DrawerMenuCss.withIcon}>
@@ -86,6 +87,26 @@ export default class DrawerMenu extends Component {
                         color="#8996A0"
                     />
                 </View>
+                <View style={DrawerMenuCss.textWithIcon}>
+                    <View style={DrawerMenuCss.withIcon}>                 
+                        <TouchableOpacity onPress={(this.navigateToScreen('Signin'))} style={DrawerMenuCss.withIcon}>
+                            <Icon
+                                style={DrawerMenuCss.iconWithText}
+                                name='user-plus'
+                                type='font-awesome'
+                                color='hsla(46, 84%, 61%, 1)'
+                            />
+                            <Text style={DrawerMenuCss.text}>S'inscrire</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Icon
+                        style={DrawerMenuCss.rightIcon}
+                        name="angle-right"
+                        type='font-awesome'
+                        color="#8996A0"
+                    />
+                </View>
+            </View>
             );
         } else {
             return(

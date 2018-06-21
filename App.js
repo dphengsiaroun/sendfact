@@ -24,11 +24,11 @@
 
 	render() {
 		return (
-		<Container>
-				<View style={{ flex: 1 }}>
+		// <Container>
+		// 		<View style={{ flex: 1 }}>
 					<Navigator />
-				</View>
-		</Container>
+		// 		</View>
+		// </Container>
 		);
 	}
 	}

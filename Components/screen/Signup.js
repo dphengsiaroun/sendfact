@@ -32,6 +32,19 @@ export default class Signup extends Component {
 		};
 	}
 
+	isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('user_is_signed_in');
+		console.log('token', token);
+		if (token) {
+			this.setState({ userIsConnected: true });
+			this.props.navigation.navigate('Profile');
+			Alert.alert(
+				'Connexion',
+				'Vous êtes déjà connecté.',
+			)
+		}
+	}
+
 
 	create = () => {
 		const username = this.state.username;

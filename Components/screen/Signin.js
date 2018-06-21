@@ -33,7 +33,6 @@ export default class Signin extends Component {
 			password: '',
 			userIsConnected: false,
 			errorMessage: null,
-			redirectToReferrer: false
 		};
 	}
 
@@ -42,14 +41,14 @@ export default class Signin extends Component {
 	}
 
 	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user');
+		const token = await AsyncStorage.getItem('user_is_signed_in');
 		console.log('token', token);
 		if (token) {
+			this.setState({ userIsConnected: true });
 			this.props.navigation.navigate('Profile');
-			this.setState({ redirectToReferrer: true, userIsConnected: true });
 			Alert.alert(
-				'Information',
-				'You have been connected',
+				'Connexion',
+				'Vous êtes déjà connecté.',
 			)
 		}
 	}
@@ -62,8 +61,7 @@ export default class Signin extends Component {
 			.then((response) => {
 				console.log('response', response);
 				if (this.state.errorMessage === null) {
-					AsyncStorage.setItem(USER_KEY, 'true');
-					this.setState({userIsConnected: true});
+					AsyncStorage.setItem('user_is_signed_in', response.user.l);
 					this.props.navigation.navigate('Camera');
 				} 
 			})

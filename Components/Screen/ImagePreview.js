@@ -16,6 +16,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 
 import { Container, Content, Header, Item, Left, Right, Title, Body, Form, Textarea, Input, Label, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
+import { relative } from "path";
 
 class ImagePreview extends Component {
 
@@ -38,10 +39,10 @@ class ImagePreview extends Component {
             <Modal
                 style={{ backgroundColor: '#000'}}
                 visible={this.state.ModalVisibleStatus}
-                transparent={false}
+                transparent={true}
                 onRequestClose={ () =>  this.ShowModalFunction() }>
-                <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                    <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
+                <View style={{ backgroundColor: '#fff', position:'absolute', bottom: 0, left: 0, right: 0}}>
+                    {/* <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
                         <Left>
                             <Button transparent
                                 onPress={() => this.setState({ ModalVisibleStatus: false })}>
@@ -56,8 +57,20 @@ class ImagePreview extends Component {
                             <Title style={{color: 'white', fontSize: 15}}>Commentaire</Title>
                         </Body>
                         <Right/>
-                    </Header>
-                    <Form style={{paddingHorizontal: 20, marginTop: '40%'}}>
+                    </Header> */}
+                    <Button transparent
+                        style={{
+                            position: 'absolute',
+
+                        }}
+                        onPress={() => this.setState({ ModalVisibleStatus: false })}>
+                        <Icon 
+                            name="angle-left"
+                            type='font-awesome'
+                            color="black"
+                            size={30}/>
+                    </Button>
+                    <Form style={{padding: 20}}>
                         <Label 
                         style={{
                             fontSize: 14, 
