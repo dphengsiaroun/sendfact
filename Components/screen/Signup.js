@@ -80,9 +80,10 @@ export default class Signup extends Component {
 			<Header style={{backgroundColor: '#efc848'}}>
 				<Left>
 					<Icon 
-						name="chevron-left"
-						type='feather'
+						name="angle-left"
+						type='font-awesome'
 						color="white"
+						size={30}
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
@@ -99,18 +100,18 @@ export default class Signup extends Component {
 			<KeyboardAvoidingView behavior='padding' style={SigninSignUpCss.wrapper}>
 				<View style={SigninSignUpCss.container}>
 					<Image style={SigninSignUpCss.avatar} source={require('../img/user-add.png')} />
-					<Text style={SigninSignUpCss.header}>Sign Up</Text>
+					<Text style={SigninSignUpCss.header}>S'inscrire</Text>
 					<Form>
 						<Item style={SigninSignUpCss.item} floatingLabel>
-							<Label style={{color: 'grey'}}>Add your Username</Label>
+							<Label style={{color: 'grey'}}>Ajouter un email</Label>
 							<Input style={{color: 'grey'}} onChangeText={(username) => this.setState({username})}/>
 						</Item>
 						<Item style={SigninSignUpCss.item2} floatingLabel last>
-							<Label style={{color: 'grey'}}>Add your Password</Label>
+							<Label style={{color: 'grey'}}>Ajouter un mot de passe</Label>
 							<Input style={{color: 'grey'}} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
 						</Item>
-						<Button block style={SigninSignUpCss.btn} onPress={this.create.bind(this)}>
-							<Text style={{color: 'white'}}>Save</Text>
+						<Button block rounded style={SigninSignUpCss.btn} onPress={this.create.bind(this)}>
+							<Text style={{color: 'white'}}>Enregistrer</Text>
 						</Button>
 					</Form>
 				</View>

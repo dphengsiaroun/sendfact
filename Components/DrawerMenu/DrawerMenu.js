@@ -37,8 +37,8 @@ export default class DrawerMenu extends Component {
 		try {
 			AsyncStorage.removeItem('user'); // to clear the token 
 			Alert.alert(
-				'Information',
-				'You have been logged out.'
+				'Déconnexion',
+				'Vous êtes bien déconnecté.'
             );
             this.props.navigation.navigate('DrawerClose');
             this.props.navigation.navigate('Signin');
@@ -58,30 +58,32 @@ export default class DrawerMenu extends Component {
 		console.log('token', token);
 		if (token) {
 			this.props.navigation.navigate('Profile');
-			this.setState({ redirectToReferrer: true });
-		}
+			this.setState({ redirectToReferrer: true, userIsConnected: true });
+        }
+        return token;
 	}
 
     renderIfUserIsConnected() {
-            if (this.state.currentUser === true) {
+        console.log('this.state.userIsConnected', this.state.userIsConnected);
+            if (this.state.userIsConnected === false) {
             return (
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
                         <TouchableOpacity onPress={(this.navigateToScreen('Signin'))} style={DrawerMenuCss.withIcon}>
                             <Icon
                                 style={DrawerMenuCss.iconWithText}
-                                name='user'
+                                name='user-circle'
                                 type='font-awesome'
                                 color='hsla(46, 84%, 61%, 1)'
                             />
-                            <Text style={DrawerMenuCss.text}>Sign in</Text>
+                            <Text style={DrawerMenuCss.text}>Connexion</Text>
                         </TouchableOpacity>
                     </View>
                     <Icon
                         style={DrawerMenuCss.rightIcon}
                         name="angle-right"
                         type='font-awesome'
-                        color="#222"
+                        color="#8996A0"
                     />
                 </View>
             );
@@ -93,18 +95,18 @@ export default class DrawerMenu extends Component {
                             <TouchableOpacity onPress={(this.navigateToScreen('Profile'))} style={DrawerMenuCss.withIcon}>
                                 <Icon
                                     style={DrawerMenuCss.iconWithText}
-                                    name='user'
+                                    name='user-circle'
                                     type='font-awesome'
                                     color='hsla(46, 84%, 61%, 1)'
                                 />
-                                <Text style={DrawerMenuCss.text}>Profile</Text>
+                                <Text style={DrawerMenuCss.text}>Mon Profil</Text>
                             </TouchableOpacity>
                         </View>
                         <Icon
                             style={DrawerMenuCss.rightIcon}
                             name="angle-right"
                             type='font-awesome'
-                            color="#222"
+                            color="#8996A0"
                         />
                     </View>
                 </View>
@@ -144,14 +146,14 @@ export default class DrawerMenu extends Component {
                                 type='font-awesome'
                                 color='hsla(46, 84%, 61%, 1)'
                             />
-                            <Text style={DrawerMenuCss.text}>Camera</Text>
+                            <Text style={DrawerMenuCss.text}>Ajouter une facture</Text>
                         </TouchableOpacity>
                     </View>
                     <Icon
                         style={DrawerMenuCss.rightIcon}
                         name="angle-right"
                         type='font-awesome'
-                        color="#222"
+                        color="#8996A0"
                     />
                 </View>
                 

@@ -87,9 +87,10 @@ export default class Profile extends Component {
 			<Header style={{backgroundColor: '#efc848'}}>
 				<Left>
 					<Icon 
-						name="chevron-left"
-						type='feather'
+						name="angle-left"
+						type='font-awesome'
 						color="white"
+						size={30}
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>

@@ -37,8 +37,8 @@ const DrawerMenuCss = StyleSheet.create({
         marginRight: 55
     },
     text: {
-        color: '#222',
-        fontSize: 17,
+        color: '#8996A0',
+        fontSize: 16,
         marginLeft: 10
     },
     textWithIcon: {

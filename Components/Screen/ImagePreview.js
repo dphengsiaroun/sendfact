@@ -4,21 +4,26 @@ import {
     Text,
     Image,
     StyleSheet,
+    Dimensions,
     TextInput,
     Modal
 } from "react-native";
 
 import { Camera, Permissions, FileSystem } from 'expo';
+
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { Container, Content, Header, Item, Left, Right, Title, Body, Input, Label, Button } from 'native-base';
+import ImageZoom from 'react-native-image-pan-zoom';
+
+import { Container, Content, Header, Item, Left, Right, Title, Body, Form, Textarea, Input, Label, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
 
 class ImagePreview extends Component {
 
    constructor(props) {
-       super(props);
-       this.state = {
-        ModalVisibleStatus: false 
+        super(props);
+        this.state = {
+            ModalVisibleStatus: false,
+            note: '' 
         };
         console.log('props', this.props)
    }
@@ -36,49 +41,59 @@ class ImagePreview extends Component {
                 transparent={false}
                 onRequestClose={ () =>  this.ShowModalFunction() }>
                 <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
+                    <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
                         <Left>
-                            <Icon 
-                                name="chevron-left"
-                                type='feather'
-                                color="white"
-                                onPress={() => this.setState({ ModalVisibleStatus: false })}/>
+                            <Button transparent
+                                onPress={() => this.setState({ ModalVisibleStatus: false })}>
+                                <Icon 
+                                    name="angle-left"
+                                    type='font-awesome'
+                                    color="white"
+                                    size={30}/>
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title style={{color: 'white', fontSize: 15}}>Commentaire</Title>
+                        </Body>
+                        <Right/>
+                    </Header>
+                    <Form style={{paddingHorizontal: 20, marginTop: '40%'}}>
+                        <Label 
+                        style={{
+                            fontSize: 14, 
+                            color: '#8996A0',
+                            marginBottom: 15
+                        }}>Ecrivez votre commentaire</Label>
+                        <TextInput
+                            multiline = {true}
+                            style={{
+                                minHeight: 40, 
+                                width: '100%', 
+                                fontSize: 18, 
+                                fontWeight: '600',
+                                paddingBottom: 10,
+                                marginBottom: 30,
+                                borderWidth: 1,
+                                borderTopWidth: 0,
+                                borderLeftWidth: 0,
+                                borderRightWidth: 0,
+                                borderBottomColor: '#efefef',
+                                color: '#000'}}/>
+                        <Button
+                            rounded
+                            block
+                            style={{
+                                paddingHorizontal: 5
+                            }}
+                            onPress={() => console.log('hello')}>
                             <Text 
                             style={{
-                                position: 'absolute',
-                                left: 25,
-                                top: 3,
                                 color: 'white',
                                 fontWeight: 'bold',
                                 fontSize: 16
-                            }}>Back</Text>
-                            
-                        </Left>
-                        <Right/>
-                    </Header>
-                    <Label 
-                        style={{
-                            position: 'absolute',
-                            top: '45%',
-                            left: '5%',
-                            fontSize: 14, 
-                            color: 'black'
-                        }}>Add your Text</Label>
-                    <TextInput 
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '5%',
-                            height: 50, 
-                            width: '90%', 
-                            fontSize: 24, 
-                            fontWeight: '600',
-                            borderWidth: 2,
-                            borderTopWidth: 0,
-                            borderLeftWidth: 0,
-                            borderRightWidth: 0,
-                            borderBottomColor: 'hsla(46, 84%, 61%, 1)',
-                            color: 'black'}}/>
+                            }}>Ajouter</Text>
+                        </Button>
+                    </Form>
                 </View>
             </Modal>
         );
@@ -122,17 +137,26 @@ class ImagePreview extends Component {
                             onPress={() => this.props.navigation.navigate("DrawerOpen")}/> 
                         </Right>
                     </Header>
-                    <ImageViewer style={{marginHorizontal: 10, marginTop: 10}} renderIndicator={() => null} imageUrls={images}/>
+                    {/* <ImageZoom 
+                        cropWidth={Dimensions.get('window').width}
+                        cropHeight={Dimensions.get('window').height}
+                       imageWidth={300}
+                       imageHeight={400}
+                       style={{position: 'absolute', top: 10}}
+                    >
+                        <Image style={{width:300, height:400}}
+                            source={images}/>
+                    </ImageZoom> */}
+                    <ImageViewer style={{height: 400, marginHorizontal: 10, marginTop: 10, marginBottom: 90}} renderIndicator={() => null} imageUrls={images}/>
                     {this.renderViewModal()}
                     <View style={{ 
                             flexDirection: 'row', 
                             justifyContent: 'space-between', 
                             alignItems: 'center', 
-                            marginVertical: '0%',
                             paddingVertical: 20, 
                             paddingHorizontal: 10,
                             position: 'absolute', 
-                            backgroundColor: '#fff',
+                            backgroundColor: 'white',
                             left: 0, 
                             bottom: 0, 
                             right: 0, 

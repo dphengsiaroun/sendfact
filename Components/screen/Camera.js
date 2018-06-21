@@ -58,6 +58,18 @@ class CameraComponent extends Component {
          }).catch((err)=> console.error(err));
     }
     
+    isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('user');
+		console.log('token', token);
+		if (token) {
+			this.props.navigation.navigate('Profile');
+			this.setState({ redirectToReferrer: true, userIsConnected: true });
+			Alert.alert(
+				'Information',
+				'You have been connected',
+			)
+		}
+	}
 
 
     addText() {

@@ -46,7 +46,7 @@ export default class Signin extends Component {
 		console.log('token', token);
 		if (token) {
 			this.props.navigation.navigate('Profile');
-			this.setState({ redirectToReferrer: true });
+			this.setState({ redirectToReferrer: true, userIsConnected: true });
 			Alert.alert(
 				'Information',
 				'You have been connected',
@@ -62,7 +62,7 @@ export default class Signin extends Component {
 			.then((response) => {
 				console.log('response', response);
 				if (this.state.errorMessage === null) {
-					AsyncStorage.setItem('user', response.user.l);
+					AsyncStorage.setItem(USER_KEY, 'true');
 					this.setState({userIsConnected: true});
 					this.props.navigation.navigate('Camera');
 				} 
@@ -79,13 +79,14 @@ export default class Signin extends Component {
 			<Header style={{backgroundColor: '#efc848'}}>
 				<Left>
 					<Icon 
-						name="chevron-left"
-						type='feather'
+						name="angle-left"
+						type='font-awesome'
 						color="white"
-						onPress={() => this.props.navigation.history.goBack()}/>
+						size={30}
+						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
-					<Title style={{color: 'white'}}>Sign In</Title>
+					<Title style={{color: 'white'}}>Connexion</Title>
 				</Body>
 				<Right>
 					<Icon 
@@ -98,7 +99,7 @@ export default class Signin extends Component {
 			<KeyboardAvoidingView behavior='padding' style={SigninSignUpCss.wrapper}>
 				<View style={SigninSignUpCss.container}>
 					<Image style={SigninSignUpCss.avatar} source={require('../img/user.png')} />
-					<Text style={SigninSignUpCss.header}>Sign In</Text>
+					<Text style={SigninSignUpCss.header}>Connexion</Text>
 					<Form>
 						<Item style={SigninSignUpCss.item} floatingLabel>
 							<Label style={{color: 'grey'}}>Email</Label>
@@ -108,7 +109,7 @@ export default class Signin extends Component {
 								value={this.state.email}/>
 						</Item>
 						<Item style={SigninSignUpCss.item2} floatingLabel last>
-							<Label style={{color: 'grey'}}>Password</Label>
+							<Label style={{color: 'grey'}}>Mot de passe</Label>
 							<Input 
 								style={{color: 'grey'}} 
 								secureTextEntry={true} 
@@ -119,11 +120,11 @@ export default class Signin extends Component {
 						<Text style={{ color: 'red', marginBottom: 15}}>
 							{this.state.errorMessage}
 						</Text>}
-						<Button block style={SigninSignUpCss.btn} onPress={this.login.bind(this)}>
-							<Text style={{color: '#fff'}}>Sign In</Text>
+						<Button block rounded style={SigninSignUpCss.btn} onPress={this.login.bind(this)}>
+							<Text style={{color: '#fff'}}>Connexion</Text>
 						</Button>
-						<Button bordered block style={SigninSignUpCss.btnOutline} onPress={() => this.props.navigation.navigate('Signup')}>
-							<Text style={{color: '#2488ff'}}>Sign Up ?</Text>
+						<Button transparent style={SigninSignUpCss.btnOutline} onPress={() => this.props.navigation.navigate('Signup')}>
+							<Text style={{color: '#2488ff'}}>Pas encore de compte ? S'inscrire.</Text>
 						</Button>
 					</Form>
 				</View>

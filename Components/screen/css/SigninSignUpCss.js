@@ -37,8 +37,7 @@ const SigninSignUpCss = StyleSheet.create({
 		backgroundColor: '#222',
 		borderRadius: 30
 	},
-	btn: {
-		// marginTop: 20, 
+	btn: {	
 		backgroundColor: '#2488ff'
 	},
 	btnOutline: {

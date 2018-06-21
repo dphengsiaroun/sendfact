@@ -49,10 +49,16 @@ export default class Validation extends Component {
 				</Right>
 			</Header>
 			<View style={ValidationCss.container}>
-				<Image style={ValidationCss.avatar} source={require('../img/checked.png')} />				
+					<Icon 
+						name="md-checkmark-circle-outline"
+						type='ionicon'
+						color="#6ac259"
+						size="90"
+						onPress={() => this.props.navigation.navigate('DrawerOpen')}/>
+				{/* <Image style={ValidationCss.avatar} source={require('../img/checked.png')} />				 */}
 				<Text style={ValidationCss.text}>Facture</Text>
 				<Text style={ValidationCss.name}>envoyée !</Text>
-					<Button block info style={ValidationCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
+					<Button block rounded style={ValidationCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
 						<Icon 
 							name='camera'
 							type="font-awesome"
