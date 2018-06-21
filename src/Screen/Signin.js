@@ -40,18 +40,32 @@ export default class Signin extends Component {
 		this.isAuthenticated().done();
 	}
 
-	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user_is_signed_in');
-		console.log('token', token);
-		if (token) {
-			this.setState({ userIsConnected: true });
-			this.props.navigation.navigate('Profile');
-			Alert.alert(
-				'Connexion',
-				'Vous êtes déjà connecté.',
-			)
-		}
-	}
+	// isAuthenticated = async () => {
+	// 	const token = await AsyncStorage.getItem('isAlreadyConnected');
+	// 	console.log('token', token);
+	// 	if (token) {
+	// 		this.setState({ userIsConnected: true });
+	// 		this.props.navigation.navigate('Profile');
+	// 		Alert.alert(
+	// 			'Connexion',
+	// 			'Vous êtes déjà connecté.',
+	// 		)
+	// 	}
+	// }
+
+	isSignedIn = () => {
+		return new Promise((resolve, reject) => {
+		  AsyncStorage.getItem('isAlreadyConnected')
+			.then(res => {
+			  if (res !== null) {
+				resolve(true);
+			  } else {
+				resolve(false);
+			  }
+			})
+			.catch(err => reject(err));
+		});
+	};
 
 	login = () => {
 		const { email, password } = this.state;
@@ -61,7 +75,8 @@ export default class Signin extends Component {
 			.then((response) => {
 				console.log('response', response);
 				if (this.state.errorMessage === null) {
-					AsyncStorage.setItem('user_is_signed_in', response.user.l);
+					AsyncStorage.setItem('isAlreadyConnected', response.user.l);
+					this.setState({ userIsConnected:'true' })
 					this.props.navigation.navigate('Camera');
 				} 
 			})
@@ -75,14 +90,7 @@ export default class Signin extends Component {
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
-				<Left>
-					<Icon 
-						name="angle-left"
-						type='font-awesome'
-						color="white"
-						size={30}
-						onPress={() => this.props.navigation.goBack()}/>
-				</Left>
+				<Left/>
 				<Body>
 					<Title style={{color: 'white'}}>Connexion</Title>
 				</Body>

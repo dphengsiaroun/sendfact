@@ -26,7 +26,8 @@ export default class DrawerMenu extends Component {
     }
 
     componentDidMount() {
-		this.isAuthenticated().done();
+        this.isAuthenticated().done();
+        console.log('this.state.userIsConnected', this.state.userIsConnected);        
 	}
     
     navigateToScreen = (route) => () => {
@@ -37,19 +38,19 @@ export default class DrawerMenu extends Component {
     }
 
     isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user_is_signed_in');
+		const token = await AsyncStorage.getItem('isAlreadyConnected');
 		console.log('token', token);
-		if (token === null) {
-			this.setState({ userIsConnected: false });
+		if (token) {
+			this.setState({ userIsConnected: true });
 			this.props.navigation.navigate('Camera');
 		} else {
-			this.setState({ userIsConnected: true });            
+			this.setState({ userIsConnected: false });            
         }
 	}
 
     signout(){
 		try {
-			AsyncStorage.removeItem('user_is_signed_in'); // to clear the token 
+			AsyncStorage.removeItem('isAlreadyConnected'); // to clear the token 
 			Alert.alert(
 				'Déconnexion',
 				'Vous êtes bien déconnecté.'
@@ -68,7 +69,6 @@ export default class DrawerMenu extends Component {
     }
 
     renderIfUserIsConnected() {
-        console.log('this.state.userIsConnected', this.state.userIsConnected);
             if (this.state.userIsConnected === false) {
             return (
                 <View>

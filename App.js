@@ -1,33 +1,38 @@
 import React from 'react';
-import { StyleSheet, View, AsyncStorage } from 'react-native';
+import { StyleSheet, View, AsyncStorage, Alert } from 'react-native';
 import { Container, Content } from 'native-base'
-import Navigator from './Components/Navigation/Navigator';
+import Navigator from './src/Navigation/Navigator';
 import firebase from 'firebase';
-import { 
-	API_KEY,
-	AUTH_DOMAIN, 
-	DATABASE_URL, 
-	PROJECT_ID, 
-	STORAGE_BUCKET, 
-	MESSAGING_SENDER_ID 
-} from './env/config'
+import { config } from './env/config'
 
 export default class App extends React.Component {
 
 	constructor() {
 		super();
+		this.state = {
+			userIsConnected: false
+		}
+	}
+
+	componentDidMount() {
+		this.isAuthenticated().done();
 	}
 
 	componentWillMount() {
-		var config = {
-			apiKey: API_KEY,
-			authDomain: AUTH_DOMAIN,
-			databaseURL: DATABASE_URL,
-			projectId: PROJECT_ID,
-			storageBucket: STORAGE_BUCKET,
-			messagingSenderId: MESSAGING_SENDER_ID
-			};
 		firebase.initializeApp(config);
+	}
+
+	isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('isAlreadyConnected');
+		console.log('token', token);
+		if (token) {
+			// this.props.navigation.navigate('Camera');
+			this.setState({ userIsConnected: true });
+			Alert.alert(
+				'Connexion',
+				'Vous êtes bien connecté.',
+			)
+		}
 	}
 
 	render() {

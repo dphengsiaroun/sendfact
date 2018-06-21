@@ -32,8 +32,13 @@ export default class Signup extends Component {
 		};
 	}
 
+	componentWillMount() {
+		this.isAuthenticated().done();
+	}
+
+
 	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user_is_signed_in');
+		const token = await AsyncStorage.getItem('isAlreadyConnected');
 		console.log('token', token);
 		if (token) {
 			this.setState({ userIsConnected: true });

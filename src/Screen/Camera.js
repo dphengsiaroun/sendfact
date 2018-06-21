@@ -26,7 +26,6 @@ class CameraComponent extends Component {
     state = {
         type: Camera.Constants.Type.back,
         flash: 'off',
-        photoId: 1,
         photos: [],
         path: null,
         permissionsGranted: false,
@@ -36,17 +35,6 @@ class CameraComponent extends Component {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ permissionsGranted: status === 'granted' });
     }
-
-    // takePicture = async () => {
-    //     try {
-    //         const data = await this.camera.takePictureAsync()
-    //             this.setState({ path: data.uri });
-    //             // this.props.updateImage(data.uri);
-    //             console.log('Path to image: ', data.uri);
-    //     } catch (err) {
-    //       console.log('err: ', err);
-    //     }
-    //   };
 
     takePicture() {
         this.camera.takePictureAsync().then((data) => {
@@ -59,7 +47,7 @@ class CameraComponent extends Component {
     }
     
     isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user_is_signed_in');
+		const token = await AsyncStorage.getItem('isAlreadyConnected');
 		console.log('token', token);
 		if (token) {
 			this.props.navigation.navigate('Profile');

@@ -38,7 +38,7 @@ export default class Profile extends Component {
 
 
 	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('user_is_signed_in');
+		const token = await AsyncStorage.getItem('isAlreadyConnected');
 		console.log('token', token);
 		if (token === null) {
 			this.setState({ userIsConnected: false });
