@@ -38,7 +38,7 @@ export default class Profile extends Component {
 
 
 	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('isAlreadyConnected');
+		const token = await AsyncStorage.getItem('currentUser');
 		console.log('token', token);
 		if (token === null) {
 			this.setState({ userIsConnected: false });
@@ -77,7 +77,7 @@ export default class Profile extends Component {
 				<Image style={ProfileCss.avatar} source={require('../img/user.png')} />				
 				<Text style={ProfileCss.text}>Welcome</Text>
 				<Text style={ProfileCss.name}>Dany !</Text>
-					<Button block info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
+					<Button block rounded info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
 						<Icon 
 							name='camera'
 							type="font-awesome" 

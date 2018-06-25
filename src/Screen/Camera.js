@@ -47,7 +47,7 @@ class CameraComponent extends Component {
     }
     
     isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('isAlreadyConnected');
+		const token = await AsyncStorage.getItem('currentUser');
 		console.log('token', token);
 		if (token) {
 			this.props.navigation.navigate('Profile');
@@ -59,11 +59,9 @@ class CameraComponent extends Component {
 		}
 	}
 
-
     addText() {
         console.log('Add Text');
     }
-    
 
     renderCamera() {
         return (
