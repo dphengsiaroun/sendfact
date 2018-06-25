@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { 
-	StyleSheet, 
-	ImageBackground, 
 	View,
-	Image,
-	AsyncStorage
 } from 'react-native';
 import { 
-	Button, 
-	Container, 
-	Content, 
+	Button,
 	Text,
 	Header,
 	Left, 

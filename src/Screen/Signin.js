@@ -41,7 +41,7 @@ export default class Signin extends Component {
 	}
 
 	// isAuthenticated = async () => {
-	// 	const token = await AsyncStorage.getItem('isAlreadyConnected');
+	// 	const token = await AsyncStorage.getItem('currentUser');
 	// 	console.log('token', token);
 	// 	if (token) {
 	// 		this.setState({ userIsConnected: true });
@@ -55,7 +55,7 @@ export default class Signin extends Component {
 
 	isSignedIn = () => {
 		return new Promise((resolve, reject) => {
-		  AsyncStorage.getItem('isAlreadyConnected')
+		  AsyncStorage.getItem('currentUser')
 			.then(res => {
 			  if (res !== null) {
 				resolve(true);
@@ -75,7 +75,7 @@ export default class Signin extends Component {
 			.then((response) => {
 				console.log('response', response);
 				if (this.state.errorMessage === null) {
-					AsyncStorage.setItem('isAlreadyConnected', response.user.l);
+					AsyncStorage.setItem('currentUser', response.user.l);
 					this.setState({ userIsConnected:'true' })
 					this.props.navigation.navigate('Camera');
 				} 

@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, AsyncStorage, Alert } from 'react-native';
-import { Container, Content } from 'native-base'
+import { AsyncStorage, Alert } from 'react-native';
 import Navigator from './src/Navigation/Navigator';
-import firebase from 'firebase';
+import Firebase from 'firebase';
 import { config } from './env/config'
 
 export default class App extends React.Component {
@@ -19,11 +18,11 @@ export default class App extends React.Component {
 	}
 
 	componentWillMount() {
-		firebase.initializeApp(config);
+		Firebase.initializeApp(config);
 	}
 
 	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('isAlreadyConnected');
+		const token = await AsyncStorage.getItem('currentUser');
 		console.log('token', token);
 		if (token) {
 			// this.props.navigation.navigate('Camera');
@@ -36,7 +35,6 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		console.log('this.state App.js', this.state);
 		return (
 			<Navigator />
 		);

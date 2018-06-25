@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import firebase from 'firebase';
 
 import DrawerMenuCss from './css/DrawerMenuCss';
 
@@ -38,7 +37,7 @@ export default class DrawerMenu extends Component {
     }
 
     isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('isAlreadyConnected');
+		const token = await AsyncStorage.getItem('currentUser');
 		console.log('token', token);
 		if (token) {
 			this.setState({ userIsConnected: true });
@@ -50,7 +49,7 @@ export default class DrawerMenu extends Component {
 
     signout(){
 		try {
-			AsyncStorage.removeItem('isAlreadyConnected'); // to clear the token 
+			AsyncStorage.removeItem('currentUser'); // to clear the token 
 			Alert.alert(
 				'Déconnexion',
 				'Vous êtes bien déconnecté.'
