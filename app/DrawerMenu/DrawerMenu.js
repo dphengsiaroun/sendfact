@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import Firebase from 'firebase';
 
 import DrawerMenuCss from './css/DrawerMenuCss';
 
@@ -48,6 +49,7 @@ export default class DrawerMenu extends Component {
 
     signout(){
 		try {
+            Firebase.auth().signOut();
 			AsyncStorage.removeItem('currentUser'); // to clear the token 
 			Alert.alert(
 				'Déconnexion',

@@ -71,7 +71,7 @@ export default class Signin extends Component {
 		.then((response) => {
 			console.log('response', response);
 			if (this.state.errorMessage === null) {
-				// AsyncStorage.setItem('currentUser', response.user.l);
+				AsyncStorage.setItem('currentUser', response.user.l);
 				this.setState({ errorMessage: null, loading: false })
 				this.props.navigation.navigate('Camera');
 			} 

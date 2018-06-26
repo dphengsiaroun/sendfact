@@ -1,6 +1,10 @@
 import React from 'react';
-import Navigator from './src/Navigation/Navigator';
+import Navigator from './app/Navigation/Navigator';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux'; 
 import Firebase from 'firebase';
+import ReduxThunk from 'redux-thunk';
+import reducers from './app/reducers';
 import { config } from './env/config'
 
 export default class App extends React.Component {
@@ -44,8 +48,12 @@ export default class App extends React.Component {
 	// }
 
 	render() {
+		const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
 		return (
-			<Navigator />
+			<Provider store={store}>
+				<Navigator />
+			</Provider>
 		);
 	}
 }

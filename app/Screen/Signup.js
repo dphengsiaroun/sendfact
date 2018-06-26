@@ -5,7 +5,8 @@ import {
 	Text,
 	Image,
 	KeyboardAvoidingView,
-	AsyncStorage 
+	AsyncStorage,
+	Alert
 } from 'react-native';
 import {
 	Button, 
@@ -37,22 +38,21 @@ export default class Signup extends Component {
 	}
 
 	componentWillMount() {
-		// this.isAuthenticated().done();
+		this.isAuthenticated().done();
 	}
 
-
-	// isAuthenticated = async () => {
-	// 	const token = await AsyncStorage.getItem('currentUser');
-	// 	console.log('token', token);
-	// 	if (token) {
-	// 		this.setState({ userIsConnected: true });
-	// 		this.props.navigation.navigate('Profile');
-	// 		Alert.alert(
-	// 			'Connexion',
-	// 			'Vous êtes déjà connecté.',
-	// 		)
-	// 	}
-	// }
+	isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('currentUser');
+		console.log('token', token);
+		if (token) {
+			this.setState({ userIsConnected: true });
+			this.props.navigation.navigate('Profile');
+			Alert.alert(
+				'Connexion',
+				'Vous êtes déjà connecté.',
+			)
+		}
+	}
 
 	renderButtonOrLoading() {
 		if (this.state.loading) {
@@ -71,7 +71,7 @@ export default class Signup extends Component {
 		.then((response) => {
 			console.log('response', response);
 			if (this.state.errorMessage === null) {
-				// AsyncStorage.setItem('currentUser', response.user.l);
+				AsyncStorage.setItem('currentUser', response.user.l);
 				this.setState({ errorMessage: null, loading: false })
 				this.props.navigation.navigate('Camera');
 			} 
