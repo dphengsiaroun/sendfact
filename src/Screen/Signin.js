@@ -6,7 +6,8 @@ import {
 	Text,
 	Image,
 	KeyboardAvoidingView,
-	AsyncStorage 
+	AsyncStorage,
+	ActivityIndicator
 } from 'react-native';
 import { 
 	Button, 
@@ -21,7 +22,7 @@ import {
 	Right 
 } from 'native-base';
 import { Icon } from 'react-native-elements';
-import firebase from 'firebase';
+import Firebase from 'firebase';
 
 import SigninSignUpCss from './css/SigninSignUpCss';
 
@@ -33,6 +34,7 @@ export default class Signin extends Component {
 			password: '',
 			userIsConnected: false,
 			errorMessage: null,
+			loading: false,
 		};
 	}
 
@@ -40,50 +42,44 @@ export default class Signin extends Component {
 		this.isAuthenticated().done();
 	}
 
-	// isAuthenticated = async () => {
-	// 	const token = await AsyncStorage.getItem('currentUser');
-	// 	console.log('token', token);
-	// 	if (token) {
-	// 		this.setState({ userIsConnected: true });
-	// 		this.props.navigation.navigate('Profile');
-	// 		Alert.alert(
-	// 			'Connexion',
-	// 			'Vous êtes déjà connecté.',
-	// 		)
-	// 	}
-	// }
+	isAuthenticated = async () => {
+		const token = await AsyncStorage.getItem('currentUser');
+		console.log('token', token);
+		if (token) {
+			this.setState({ userIsConnected: true });
+			this.props.navigation.navigate('Profile');
+			Alert.alert(
+				'Connexion',
+				'Vous êtes déjà connecté.',
+			)
+		}
+	}
 
-	isSignedIn = () => {
-		return new Promise((resolve, reject) => {
-		  AsyncStorage.getItem('currentUser')
-			.then(res => {
-			  if (res !== null) {
-				resolve(true);
-			  } else {
-				resolve(false);
-			  }
-			})
-			.catch(err => reject(err));
-		});
-	};
+	renderButtonOrLoading() {
+		if (this.state.loading) {
+			return  <ActivityIndicator size="large" color="#efc848" />
+		}
+		return 	<Button block rounded style={SigninSignUpCss.btn} onPress={this.onLoginPress.bind(this)}>
+					<Text style={{color: '#fff'}}>Connexion</Text>
+				</Button>
+	}
 
-	login = () => {
+	onLoginPress = () => {
+		this.setState({ errorMessage: null, loading: true });
 		const { email, password } = this.state;
-   		firebase
-			.auth()
-			.signInWithEmailAndPassword(email, password)
-			.then((response) => {
-				console.log('response', response);
-				if (this.state.errorMessage === null) {
-					AsyncStorage.setItem('currentUser', response.user.l);
-					this.setState({ userIsConnected:'true' })
-					this.props.navigation.navigate('Camera');
-				} 
-			})
-			.catch(error => {
-				this.setState({ errorMessage: error.message })
-				console.log('error', error, this.state);
-			});
+   		Firebase.auth().signInWithEmailAndPassword(email, password)
+		.then((response) => {
+			console.log('response', response);
+			if (this.state.errorMessage === null) {
+				// AsyncStorage.setItem('currentUser', response.user.l);
+				this.setState({ errorMessage: null, loading: false })
+				this.props.navigation.navigate('Camera');
+			} 
+		})
+		.catch(error => {
+			this.setState({ errorMessage: error.message, loading: false })
+			console.log('error', error, this.state);
+		});
 	}
 
 	render() {
@@ -126,9 +122,7 @@ export default class Signin extends Component {
 						<Text style={{ color: 'red', marginBottom: 15}}>
 							{this.state.errorMessage}
 						</Text>}
-						<Button block rounded style={SigninSignUpCss.btn} onPress={this.login.bind(this)}>
-							<Text style={{color: '#fff'}}>Connexion</Text>
-						</Button>
+						{this.renderButtonOrLoading()}
 						<Button transparent style={SigninSignUpCss.btnOutline} onPress={() => this.props.navigation.navigate('Signup')}>
 							<Text style={{color: '#2488ff'}}>Pas encore de compte ? S'inscrire.</Text>
 						</Button>

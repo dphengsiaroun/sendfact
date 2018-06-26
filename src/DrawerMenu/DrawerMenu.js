@@ -25,8 +25,7 @@ export default class DrawerMenu extends Component {
     }
 
     componentDidMount() {
-        this.isAuthenticated().done();
-        console.log('this.state.userIsConnected', this.state.userIsConnected);        
+        // this.isAuthenticated().done();
 	}
     
     navigateToScreen = (route) => () => {
@@ -36,16 +35,16 @@ export default class DrawerMenu extends Component {
         this.props.navigation.dispatch(navigateAction);
     }
 
-    isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('currentUser');
-		console.log('token', token);
-		if (token) {
-			this.setState({ userIsConnected: true });
-			this.props.navigation.navigate('Camera');
-		} else {
-			this.setState({ userIsConnected: false });            
-        }
-	}
+    // isAuthenticated = () => {
+	// 	const token = AsyncStorage.getItem('currentUser');
+	// 	console.log('token', token);
+	// 	if (token) {
+	// 		this.setState({ userIsConnected: true });
+	// 		// this.props.navigation.navigate('Camera');
+	// 	} else {
+	// 		this.setState({ userIsConnected: false });            
+    //     }
+	// }
 
     signout(){
 		try {
@@ -68,6 +67,7 @@ export default class DrawerMenu extends Component {
     }
 
     renderIfUserIsConnected() {
+        console.log('xxxxx', this.state.userIsConnected);
             if (this.state.userIsConnected === false) {
             return (
                 <View>
