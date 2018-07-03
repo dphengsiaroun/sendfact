@@ -14,68 +14,26 @@ import {
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import Firebase from 'firebase';
+import { userLogout } from '../actions';
+import { connect } from 'react-redux';
 
 import DrawerMenuCss from './css/DrawerMenuCss';
 
-export default class DrawerMenu extends Component {
-    constructor(props) {
-		super(props);
-		this.state = {
-            userIsConnected: false
-		}
-    }
-
-    componentDidMount() {
-        // this.isAuthenticated().done();
-	}
-    
-    navigateToScreen = (route) => () => {
-        const navigateAction = NavigationActions.navigate({
-          routeName: route
-        });
-        this.props.navigation.dispatch(navigateAction);
-    }
-
-    // isAuthenticated = () => {
-	// 	const token = AsyncStorage.getItem('currentUser');
-	// 	console.log('token', token);
-	// 	if (token) {
-	// 		this.setState({ userIsConnected: true });
-	// 		// this.props.navigation.navigate('Camera');
-	// 	} else {
-	// 		this.setState({ userIsConnected: false });            
-    //     }
-	// }
+class DrawerMenu extends Component {
 
     signout(){
-		try {
-            Firebase.auth().signOut();
-			AsyncStorage.removeItem('currentUser'); // to clear the token 
-			Alert.alert(
-				'Déconnexion',
-				'Vous êtes bien déconnecté.'
-            );
-            this.props.navigation.navigate('DrawerClose');
-            this.props.navigation.navigate('Signin');
-			this.setState({
-				userIsConnected: false
-			});
-		} catch (error) {
-			Alert.alert(
-				'Error',
-				error
-			);
-		}
+        this.props.userLogout();
+        console.log('SIGNOUT: this.props', this.props.userLogout());
     }
 
     renderIfUserIsConnected() {
-        console.log('xxxxx', this.state.userIsConnected);
-            if (this.state.userIsConnected === false) {
+        const { isLoggedIn } = this.props;
+            if (!isLoggedIn) {
             return (
                 <View>
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
-                        <TouchableOpacity onPress={(this.navigateToScreen('Signin'))} style={DrawerMenuCss.withIcon}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Signin')} style={DrawerMenuCss.withIcon}>
                             <Icon
                                 style={DrawerMenuCss.iconWithText}
                                 name='user-circle'
@@ -94,7 +52,7 @@ export default class DrawerMenu extends Component {
                 </View>
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
-                        <TouchableOpacity onPress={(this.navigateToScreen('Signup'))} style={DrawerMenuCss.withIcon}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')} style={DrawerMenuCss.withIcon}>
                             <Icon
                                 style={DrawerMenuCss.iconWithText}
                                 name='user-plus'
@@ -118,7 +76,7 @@ export default class DrawerMenu extends Component {
                 <View>
                     <View style={DrawerMenuCss.textWithIcon}>
                         <View style={DrawerMenuCss.withIcon}>
-                            <TouchableOpacity onPress={(this.navigateToScreen('Profile'))} style={DrawerMenuCss.withIcon}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={DrawerMenuCss.withIcon}>
                                 <Icon
                                     style={DrawerMenuCss.iconWithText}
                                     name='user-circle'
@@ -141,8 +99,7 @@ export default class DrawerMenu extends Component {
     }
     
     render() {
-        console.log('Drawer menu props', this.props.navigation);
-        console.log('Drawer menu state', this.state);
+		console.log('DRAWER_NAV: this.props', this.props);
         return (
         <View style={DrawerMenuCss.menu}>
              <View style={DrawerMenuCss.avatarContainer}>
@@ -165,7 +122,7 @@ export default class DrawerMenu extends Component {
                 {this.renderIfUserIsConnected()}
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>
-                        <TouchableOpacity onPress={(this.navigateToScreen('Camera'))} style={DrawerMenuCss.withIcon}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={DrawerMenuCss.withIcon}>
                             <Icon
                                 style={DrawerMenuCss.iconWithText}
                                 name='camera'
@@ -188,3 +145,10 @@ export default class DrawerMenu extends Component {
      );
     }
 }
+
+const mapStateToProps = ({ auth }) => {
+	const { isLoggedIn } = auth;
+	return { isLoggedIn };
+};
+
+export default connect(mapStateToProps, { userLogout })(DrawerMenu);

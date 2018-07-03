@@ -23,66 +23,52 @@ import {
 import { Icon } from 'react-native-elements';
 import Firebase from 'firebase';
 
+import { connect } from 'react-redux';
+import { emailChanged, passwordChanged, signupUser } from '../actions';
+
 import SigninSignUpCss from './css/SigninSignUpCss';
 
-export default class Signup extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			email: '',
-			password: '',
-			userIsConnected: false,
-			errorMessage: null,
-			loading: false,
-		};
+class Signup extends Component {
+
+	onEmailChange(text) {
+		this.props.emailChanged(text);
 	}
 
-	componentWillMount() {
-		this.isAuthenticated().done();
+	onPasswordChange(text) {
+		this.props.passwordChanged(text);
 	}
 
-	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('currentUser');
-		console.log('token', token);
-		if (token) {
-			this.setState({ userIsConnected: true });
-			this.props.navigation.navigate('Profile');
-			Alert.alert(
-				'Connexion',
-				'Vous êtes déjà connecté.',
+	onButtonPress() {
+		const { email, password } = this.props;
+		this.props.signupUser({ email, password });
+	}
+
+	renderError() {
+		if (this.props.error) {
+			return (
+				<View style={{padding: 10, marginBottom: 10, borderRadius: 5}}>
+					<Text style={{color: 'red', textAlign: 'center', fontSize: 15}}>
+						{this.props.error}
+					</Text>
+				</View>
 			)
 		}
 	}
 
-	renderButtonOrLoading() {
-		if (this.state.loading) {
-			return  <ActivityIndicator size="large" color="#efc848" />
+	renderButton() {
+		if (this.props.loading) {
+			return <ActivityIndicator size="large" color="#efc848" />
 		}
-		return 	<Button block rounded style={SigninSignUpCss.btn} onPress={this.onSignUpPress.bind(this)}>
-					<Text style={{color: 'white'}}>S'inscrire</Text>
-				</Button>
-	}
 
-
-	onSignUpPress = () => {
-		this.setState({ errorMessage: null, loading: true });
-		const { email, password } = this.state;
-   		Firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then((response) => {
-			console.log('response', response);
-			if (this.state.errorMessage === null) {
-				AsyncStorage.setItem('currentUser', response.user.l);
-				this.setState({ errorMessage: null, loading: false })
-				this.props.navigation.navigate('Camera');
-			} 
-		})
-		.catch(error => {
-			this.setState({ errorMessage: error.message, loading: false })
-			console.log('error', error, this.state);
-		});
+		return (
+			<Button block rounded style={SigninSignUpCss.btn} onPress={this.onButtonPress.bind(this)}>
+				<Text style={{color: '#fff'}}>Connexion</Text>
+			</Button>
+		);
 	}
 
 	render() {
+		console.log('SIGNUP: this.props', this.props);
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
@@ -102,7 +88,7 @@ export default class Signup extends Component {
 						name="menu"
 						type='feather'
 						color="white"
-						onPress={() => this.props.navigation.navigate('DrawerOpen')}/>
+						onPress={() => this.props.navigation.openDrawer()}/>
 				</Right>
 			</Header>
 			<KeyboardAvoidingView behavior='padding' style={SigninSignUpCss.wrapper}>
@@ -112,17 +98,21 @@ export default class Signup extends Component {
 					<Form>
 						<Item style={SigninSignUpCss.item} floatingLabel>
 							<Label style={{color: 'grey'}}>Email</Label>
-							<Input style={{color: 'grey'}} onChangeText={(email) => this.setState({email})}/>
+							<Input 
+								style={{color: 'grey'}} 
+								onChangeText={this.onEmailChange.bind(this)} 
+								value={this.props.email}/>
 						</Item>
 						<Item style={SigninSignUpCss.item2} floatingLabel last>
 							<Label style={{color: 'grey'}}>Mot de passe</Label>
-							<Input style={{color: 'grey'}} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+							<Input 
+								style={{color: 'grey'}} 
+								secureTextEntry={true} 
+								onChangeText={this.onPasswordChange.bind(this)} 
+								value={this.props.password}/>
 						</Item>
-						{this.state.errorMessage &&
-						<Text style={{ color: 'red', marginBottom: 15}}>
-							{this.state.errorMessage}
-						</Text>}
-						{this.renderButtonOrLoading()}
+						{this.renderError()}
+						{this.renderButton()}
 					</Form>
 				</View>
 			</KeyboardAvoidingView>
@@ -130,3 +120,10 @@ export default class Signup extends Component {
 		);
 	}
 }
+
+const mapStateToProps = ({ auth }) => {
+	const { email, password, error, loading, isLoggedIn } = auth;
+	return { email, password, error, loading, isLoggedIn };
+};
+
+export default connect(mapStateToProps, { emailChanged, passwordChanged, signupUser })(Signup);

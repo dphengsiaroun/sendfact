@@ -138,7 +138,7 @@ class ImagePreview extends Component {
                             name="menu"
                             type="feather"
                             color="white"
-                            onPress={() => this.props.navigation.navigate("DrawerOpen")}/> 
+                            onPress={() => this.props.navigation.openDrawer()}/> 
                         </Right>
                     </Header>
                     <ImageViewer style={{height: 400, marginHorizontal: 10, marginTop: 10, marginBottom: 90}} renderIndicator={() => null} imageUrls={images}/>

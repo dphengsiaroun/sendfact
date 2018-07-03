@@ -3,22 +3,21 @@ import {
     View,
     Text,
     Image,
-    StyleSheet,
-    Vibration
 } from "react-native";
 
 import { Camera, Permissions, FileSystem } from 'expo';
 
-import { Container, Content, Header, Item, Left, Right, Title, Body, Input, Button } from 'native-base';
+import { Container, Header, Item, Left, Right, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { connect } from 'react-redux';
 
-const flashModeOrder = {
-    off: 'on',
-    on: 'auto',
-    auto: 'torch',
-    torch: 'off',
-  };
+// const flashModeOrder = {
+//     off: 'on',
+//     on: 'auto',
+//     auto: 'torch',
+//     torch: 'off',
+//   };
   
 
 class CameraComponent extends Component {
@@ -26,7 +25,6 @@ class CameraComponent extends Component {
     state = {
         type: Camera.Constants.Type.back,
         flash: 'off',
-        photos: [],
         path: null,
         permissionsGranted: false,
     }
@@ -39,31 +37,19 @@ class CameraComponent extends Component {
     takePicture() {
         this.camera.takePictureAsync().then((data) => {
             var imagePath = data.uri;
-            console.log('imagePath', imagePath);
+            // console.log('imagePath', imagePath);
             this.props.navigation.navigate('ImagePreview', {
                 imagePath: imagePath,
               });
          }).catch((err)=> console.error(err));
     }
-    
-    isAuthenticated = () => {
-		const token = AsyncStorage.getItem('currentUser');
-		console.log('token', token);
-		if (token) {
-			this.props.navigation.navigate('Profile');
-			this.setState({ userIsConnected: true });
-			Alert.alert(
-				'Connexion',
-				'Vous êtes bien connecté.',
-			)
-		}
-	}
 
     addText() {
         console.log('Add Text');
     }
 
     renderCamera() {
+		console.log('CAMERA: this.state, this.props', this.state, this.props);
         return (
             <View style={{ flex: 1, }}>
                 <Camera ref={ref => { this.camera = ref; }}
@@ -95,7 +81,7 @@ class CameraComponent extends Component {
                                 name="menu"
                                 type='feather'
                                 color="#fff"
-                                onPress={() => this.props.navigation.navigate("DrawerOpen")}/> 
+                                onPress={() => this.props.navigation.openDrawer()}/> 
                         </Right>
                     </Header>
 
@@ -146,7 +132,7 @@ class CameraComponent extends Component {
                         name="menu"
                         type="feather"
                         color="white"
-                        onPress={() => this.props.navigation.navigate("DrawerOpen")}/> 
+                        onPress={() => this.props.navigation.openDrawer()}/> 
                     </Right>
                 </Header>
                 <Image
@@ -207,8 +193,7 @@ class CameraComponent extends Component {
     }
 
     render() {
-        const { permissionsGranted } = this.state
-
+        const { permissionsGranted } = this.state;
         if (permissionsGranted === null) {
             return <View />
         }
@@ -224,12 +209,10 @@ class CameraComponent extends Component {
         }
     }
 }
-export default CameraComponent;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-});
+const mapStateToProps = ({ auth }) => {
+	const { user, isLoggedIn } = auth;
+	return { user, isLoggedIn };
+};
+
+export default connect(mapStateToProps)(CameraComponent);

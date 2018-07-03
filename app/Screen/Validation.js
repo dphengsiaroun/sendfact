@@ -39,7 +39,7 @@ export default class Validation extends Component {
 						name="menu"
 						type='feather'
 						color="white"
-						onPress={() => this.props.navigation.navigate('DrawerOpen')}/>
+						onPress={() => this.props.navigation.openDrawer()}/>
 				</Right>
 			</Header>
 			<View style={ValidationCss.container}>
@@ -48,7 +48,7 @@ export default class Validation extends Component {
 						type='ionicon'
 						color="#6ac259"
 						size={90}
-						onPress={() => this.props.navigation.navigate('DrawerOpen')}/>
+						onPress={() => this.props.navigation.openDrawer()}/>
 				{/* <Image style={ValidationCss.avatar} source={require('../img/checked.png')} />				 */}
 				<Text style={ValidationCss.text}>Facture</Text>
 				<Text style={ValidationCss.name}>envoyée !</Text>

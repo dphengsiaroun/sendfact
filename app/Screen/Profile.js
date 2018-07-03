@@ -19,38 +19,18 @@ import {
 	Title 
 } from 'native-base';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+
+
 import ProfileCss from './css/ProfileCss';
-import firebase from 'firebase';
+import Firebase from 'firebase';
 
-export default class Profile extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			username: '',
-			password: '',
-			userIsConnected: true,
-		};
-	}
-
-	componentDidMount() {
-		this.isAuthenticated().done();
-	}
-
-
-	isAuthenticated = async () => {
-		const token = await AsyncStorage.getItem('currentUser');
-		console.log('token', token);
-		if (token === null) {
-			this.setState({ userIsConnected: false });
-			this.props.navigation.navigate('Signin');
-			Alert.alert(
-				'Connexion',
-				'Veuillez vous connecter.',
-			)
-		}
-	}
+class Profile extends Component {
 
 	render() {
+		const { user } = this.props;
+		console.log('PROFILE: user', user.user.email);
+		const username = user.user.email;
 		return (
 			<React.Fragment>
 			<Header style={{backgroundColor: '#efc848'}}>
@@ -63,21 +43,21 @@ export default class Profile extends Component {
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
-					<Title style={{color: 'white'}}>Profile</Title>
+					<Title style={{color: 'white'}}>Profil</Title>
 				</Body>
 				<Right>
 					<Icon 
 						name="menu"
 						type='feather'
 						color="white"
-						onPress={() => this.props.navigation.navigate('DrawerOpen')}/>
+						onPress={() => this.props.navigation.openDrawer()}/>
 				</Right>
 			</Header>
 			<View style={ProfileCss.container}>
 				<Image style={ProfileCss.avatar} source={require('../img/user.png')} />				
 				<Text style={ProfileCss.text}>Welcome</Text>
-				<Text style={ProfileCss.name}>Dany !</Text>
-					<Button block rounded info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
+				<Text style={ProfileCss.name}>{username}</Text>
+					<Button block rounded info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Home')}>
 						<Icon 
 							name='camera'
 							type="font-awesome" 
@@ -103,5 +83,12 @@ export default class Profile extends Component {
 		);
 	}
 }
+
+const mapStateToProps = ({ auth }) => {
+	const { user, isLoggedIn } = auth;
+	return { user, isLoggedIn };
+};
+
+export default connect(mapStateToProps)(Profile);
 
 

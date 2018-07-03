@@ -1,37 +1,37 @@
 import React from 'react';
-import Navigator from './app/Navigation/Navigator';
+// import Navigator from './app/navigation/Navigator';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux'; 
+// import { createStore, applyMiddleware } from 'redux'; 
 import Firebase from 'firebase';
-import ReduxThunk from 'redux-thunk';
-import reducers from './app/reducers';
+// import ReduxThunk from 'redux-thunk';
+// import reducers from './app/reducers';
 import { config } from './env/config'
+import { AppNavigator, middleware } from './app/navigation/AppNavigator';
+// import { addNavigationHelpers } from 'react-navigation';
+import configStore from './app/store/configStore.js';
+import { NavigationActions } from 'react-navigation';
+const store = configStore();
+
+Firebase.initializeApp(config);
+
 
 export default class App extends React.Component {
 
-	constructor() {
-		super();
-		this.state = {
-			userIsConnected: false,
-			loading: true
-		}
-	}
-
-	componentDidMount() {
-		this.authSubscription = Firebase.auth().onAuthStateChanged((user) => {
-		  this.setState({
-			loading: false,
-			user,
-		  });
-		});
-	  }
+	// componentDidMount() {
+	// 	this.authSubscription = Firebase.auth().onAuthStateChanged((user) => {
+	// 	  this.setState({
+	// 		loading: false,
+	// 		user,
+	// 	  });
+	// 	});
+	// }
 	
-	componentWillUnmount() {
-		this.authSubscription();
-	}
+	// componentWillUnmount() {
+	// 	this.authSubscription();
+	// }
 
 	componentWillMount() {
-		Firebase.initializeApp(config);
+		console.log('xxxx', this.props, this.state);
 	}
 
 	// isAuthenticated = async () => {
@@ -47,12 +47,17 @@ export default class App extends React.Component {
 	// 	}
 	// }
 
-	render() {
-		const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+	someEvent() {
+		// call navigate for AppNavigator here:
+		this.navigator && this.navigator.dispatch(
+		  NavigationActions.navigate({ routeName: someRouteName })
+		);
+	  }
 
+	render() {
 		return (
 			<Provider store={store}>
-				<Navigator />
+				<AppNavigator />
 			</Provider>
 		);
 	}
