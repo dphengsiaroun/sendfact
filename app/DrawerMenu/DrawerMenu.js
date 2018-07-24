@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Dimensions,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Image,
   Text,
   View,
   AsyncStorage,
-  Alert,
-  Button
+  Alert
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import Firebase from 'firebase';
 import { userLogout } from '../actions';
 import { connect } from 'react-redux';
 
@@ -22,18 +17,22 @@ import DrawerMenuCss from './css/DrawerMenuCss';
 class DrawerMenu extends Component {
 
     signout(){
-        this.props.userLogout();
+        this.props.userLogout()
+        Alert.alert(
+            'Déconnexion',
+            'Vous êtes bien déconnecté.',
+        );
         console.log('SIGNOUT: this.props', this.props.userLogout());
     }
 
-    renderIfUserIsConnected() {
+    renderIfUserIsNotConnected() {
         const { isLoggedIn } = this.props;
             if (!isLoggedIn) {
             return (
                 <View>
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>                 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Signin')} style={DrawerMenuCss.withIcon}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('SocialLogin')} style={DrawerMenuCss.withIcon}>
                             <Icon
                                 style={DrawerMenuCss.iconWithText}
                                 name='user-circle'
@@ -109,17 +108,19 @@ class DrawerMenu extends Component {
                         source={require('../../assets/logo.png')}
                     />
                     <Text style={DrawerMenuCss.profile}>SendFact</Text>
-                    <Icon
-                        onPress={() => this.signout()}
-                        style={DrawerMenuCss.iconWithText}
-                        name='power-off'
-                        type='font-awesome'
-                        color='white'
-                    />
+                    {this.props.isLoggedIn && 
+                        <Icon
+                            onPress={() => this.signout()}
+                            style={DrawerMenuCss.iconWithText}
+                            name='power-off'
+                            type='font-awesome'
+                            color='white'
+                        />
+                    }
                  </View>
              </View>
             <ScrollView style={DrawerMenuCss.scrollContainer}>
-                {this.renderIfUserIsConnected()}
+                {this.renderIfUserIsNotConnected()}
                 <View style={DrawerMenuCss.textWithIcon}>
                     <View style={DrawerMenuCss.withIcon}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={DrawerMenuCss.withIcon}>

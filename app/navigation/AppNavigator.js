@@ -9,6 +9,8 @@ import Signin from '../Screen/Signin';
 import Signup from '../Screen/Signup';
 import Profile from '../Screen/Profile';
 import Camera from '../Screen/Camera';
+import SocialLogin from '../Screen/SocialLogin';
+import Activation from '../Screen/Activation';
 import Validation from '../Screen/Validation';
 import ImagePreview from '../Screen/ImagePreview';
 import DrawerMenu from '../DrawerMenu/DrawerMenu';
@@ -23,11 +25,13 @@ const MyNavigator = createStackNavigator({
 	Signin: { screen: Signin },
 	Signup: { screen: Signup },
 	Profile: { screen: Profile },
+	SocialLogin: { screen: SocialLogin },
+	Activation: { screen: Activation },
 	Validation: { screen: Validation },
 	ImagePreview: { screen: ImagePreview },
 }, {
 		headerMode: 'none',
-		initialRouteName: 'Home',
+		initialRouteName: 'SocialLogin',
   });
 
 const RootNavigator = createDrawerNavigator({

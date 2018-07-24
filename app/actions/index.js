@@ -1,5 +1,9 @@
 import {
+    Alert
+} from 'react-native';
+import {
     StackActions,
+    DrawerActions,
     NavigationActions
 } from 'react-navigation';
 import Firebase from 'firebase'
@@ -12,7 +16,13 @@ import {
     SIGNUP_USER_SUCCESS,
     SIGNUP_USER_FAIL,
     SIGNUP_USER,
-    USER_LOG_OUT
+    USER_LOGOUT,
+    SET_IMAGE_PATH,
+    COMMENT_CHANGED,
+    SET_COMMENT,
+    SAVE_TO_FIREBASE,
+    SAVE_TO_FIREBASE_FAIL,
+    SAVE_TO_FIREBASE_SUCCESS
 } from './types';
 
 export const emailChanged = (text) => {
@@ -28,6 +38,8 @@ export const passwordChanged = (text) => {
         payload: text
     };
 };
+
+// LOGIN ACTIONS
 
 export const loginUser = ({
     email,
@@ -71,17 +83,24 @@ const loginUserSuccess = (dispatch, user) => {
     dispatch(resetAction);
 };
 
+// LOGOUT ACTIONS
+
 export const userLogout = () => {
     return (dispatch) => {
         dispatch({
-            type: USER_LOG_OUT
+            type: USER_LOGOUT
         });
-        Firebase.auth().signOut()
+        Firebase.auth().signOut();
+        dispatch(DrawerActions.closeDrawer());
     };
 }
 
+// SIGNUP ACTIONS
 
-export const signupUser = ({ email, password }) => {
+export const signupUser = ({
+    email,
+    password
+}) => {
     return (dispatch) => {
         dispatch({
             type: SIGNUP_USER
@@ -114,6 +133,80 @@ const signupUserSuccess = (dispatch, user) => {
         index: 0,
         actions: [NavigationActions.navigate({
             routeName: 'Home'
+        })],
+    });
+    dispatch(resetAction);
+};
+
+// SET IMAGE ACTIONS
+
+export const setImagePath = (path) => {
+    return (dispatch) => {
+        dispatch({
+            type: SET_IMAGE_PATH,
+            payload: path
+        });
+    }
+}
+
+// SET COMMENT ACTIONS
+
+export const commentChanged = (text) => {
+    return {
+        type: COMMENT_CHANGED,
+        payload: text
+    };
+};
+
+export const setComment = (comment) => {
+    return (dispatch) => {
+        dispatch({
+            type: SET_COMMENT,
+            payload: comment
+        });
+    };
+};
+
+// SAVE DATA TO FIREBASE
+
+export const saveToFirebase = (path, comment, user) => {
+    return (dispatch) => {
+        dispatch({
+            type: SAVE_TO_FIREBASE
+        });
+        var timestamp = new Date().getTime();
+        Firebase.database().ref('/factures/').push({
+                user: user,
+                imagePath: path,
+                comment: comment,
+                date: timestamp,
+            }).then(completed => {
+                saveToFirebaseSuccess(dispatch, completed);
+                // console.log('user', user);
+            })
+            .catch(error => {
+                saveToFirebaseFail(dispatch, error);
+                console.log('error', error.message);
+            });
+    };
+};
+
+const saveToFirebaseFail = (dispatch, error) => {
+    dispatch({
+        type: SAVE_TO_FIREBASE_FAIL,
+        payload: error
+    });
+}
+
+const saveToFirebaseSuccess = (dispatch, completed) => {
+    dispatch({
+        type: SAVE_TO_FIREBASE_SUCCESS,
+        payload: completed
+    });
+    const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({
+            routeName: 'Validation'
         })],
     });
     dispatch(resetAction);

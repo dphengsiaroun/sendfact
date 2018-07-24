@@ -57,7 +57,7 @@ class Signup extends Component {
 
 	renderButton() {
 		if (this.props.loading) {
-			return <ActivityIndicator size="large" color="#efc848" />
+			return <ActivityIndicator size="large" color="#338F2F" />
 		}
 
 		return (
@@ -71,7 +71,7 @@ class Signup extends Component {
 		console.log('SIGNUP: this.props', this.props);
 		return (
 			<React.Fragment>
-			<Header style={{backgroundColor: '#efc848'}}>
+			<Header style={{backgroundColor: '#338F2F'}}>
 				<Left>
 					<Icon 
 						name="angle-left"
@@ -81,7 +81,7 @@ class Signup extends Component {
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
-					<Title style={{color: 'white'}}>S'inscrire</Title>
+					<Title style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>S'inscrire</Title>
 				</Body>
 				<Right>
 					<Icon 

@@ -21,11 +21,11 @@ const ProfileCss = StyleSheet.create({
 	},
     name: {
 		color: '#222',
-		fontSize: 25,
+		fontSize: 20,
 		marginBottom: 30
 	},
 	btn: {
-		backgroundColor: '#2488ff',
+		backgroundColor: '#338F2F',
 		margin: 5
 	},
 	btnDanger: {

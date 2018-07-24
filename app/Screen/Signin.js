@@ -54,7 +54,7 @@ class Signin extends Component {
 
 	renderButton() {
 		if (this.props.loading) {
-			return <ActivityIndicator size="large" color="#efc848" />
+			return <ActivityIndicator size="large" color="#338F2F" />
 		}
 
 		return (
@@ -68,10 +68,17 @@ class Signin extends Component {
 		console.log('SIGNIN: this.state, this.props', this.state, this.props);
 		return (
 			<React.Fragment>
-			<Header style={{backgroundColor: '#efc848'}}>
-				<Left/>
+			<Header style={{backgroundColor: '#338F2F'}}>
+				<Left>
+					<Icon 
+						name="angle-left"
+						type='font-awesome'
+						color="white"
+						size={30}
+						onPress={() => this.props.navigation.goBack()}/>
+				</Left>
 				<Body>
-					<Title style={{color: 'white'}}>Connexion</Title>
+					<Title style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>Connexion</Title>
 				</Body>
 				<Right>
 					<Icon 

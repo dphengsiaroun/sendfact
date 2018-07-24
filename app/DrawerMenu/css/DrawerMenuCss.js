@@ -11,7 +11,7 @@ const DrawerMenuCss = StyleSheet.create({
         backgroundColor: '#f9f9f9'
     },
     avatarContainer: {
-        backgroundColor: 'hsla(46, 84%, 61%, 1)',
+        backgroundColor: '#338F2F',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

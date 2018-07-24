@@ -28,12 +28,12 @@ import Firebase from 'firebase';
 class Profile extends Component {
 
 	render() {
-		const { user } = this.props;
-		console.log('PROFILE: user', user.user.email);
-		const username = user.user.email;
+		// const { user } = this.props;
+		// console.log('PROFILE: user', user.user.email);
+		// const username = user.user.email;
 		return (
 			<React.Fragment>
-			<Header style={{backgroundColor: '#efc848'}}>
+			<Header style={{backgroundColor: '#338F2F'}}>
 				<Left>
 					<Icon 
 						name="angle-left"
@@ -43,7 +43,7 @@ class Profile extends Component {
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
-					<Title style={{color: 'white'}}>Profil</Title>
+					<Title style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>Profile</Title>
 				</Body>
 				<Right>
 					<Icon 
@@ -55,14 +55,15 @@ class Profile extends Component {
 			</Header>
 			<View style={ProfileCss.container}>
 				<Image style={ProfileCss.avatar} source={require('../img/user.png')} />				
-				<Text style={ProfileCss.text}>Welcome</Text>
-				<Text style={ProfileCss.name}>{username}</Text>
-					<Button block rounded info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Home')}>
+				<Text style={ProfileCss.text}>Bienvenue</Text>
+				<Text style={ProfileCss.name}>Jean-Louis GUENEGO</Text>
+				{/* {username} */}
+					<Button block transparent info style={ProfileCss.btn} onPress={() => this.props.navigation.navigate('Home')}>
 						<Icon 
 							name='camera'
 							type="font-awesome" 
 							color="white"/>
-						<Text>Go to camera</Text>
+						<Text style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>Nouvelle facture</Text>
 					</Button>
 					{/* <Button block style={ProfileCss.btnWarning} onPress={() => this.props.navigation.navigate('Signin')}>
 						<Icon 

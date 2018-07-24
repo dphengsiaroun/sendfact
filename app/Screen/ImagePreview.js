@@ -3,39 +3,80 @@ import {
     View,
     Text,
     Image,
-    StyleSheet,
-    Dimensions,
     TextInput,
-    Modal
+    Modal,
+    ActivityIndicator
 } from "react-native";
-
-import { Camera, Permissions, FileSystem } from 'expo';
-
 import ImageViewer from 'react-native-image-zoom-viewer';
-
-import { Container, Content, Header, Item, Left, Right, Title, Body, Form, Textarea, Input, Label, Button } from 'native-base';
+import { Container, Header, Left, Right, Title, Body, Form, Label, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { commentChanged, setComment, saveToFirebase } from '../actions';
 
 class ImagePreview extends Component {
 
-   constructor(props) {
-        super(props);
-        this.state = {
-            ModalVisibleStatus: false,
-            comment: '' 
-        };
-        console.log('props', this.props)
-   }
+    state = {
+        ModalVisibleStatus: false,
+    };
+
+    onCommentChange(text) {
+        this.props.commentChanged(text);
+    }
+
+    addComment() {
+		const { comment } = this.props;
+        this.props.setComment({ comment });
+        this.setState({ModalVisibleStatus: !this.state.ModalVisibleStatus});                
+	}
 
     newComment() {
         console.log('New comment');
         this.setState({ModalVisibleStatus: !this.state.ModalVisibleStatus});   
     }
 
-    addComment() {
-        console.log('Add comment');
-        this.setState({ModalVisibleStatus: !this.state.ModalVisibleStatus});        
+    onButtonPress() {
+        const isLoggedIn = this.props.auth.isLoggedIn;
+        if (isLoggedIn === false) {
+            return this.props.navigation.navigate('Signin');
+        }
+        const user = this.props.auth.user.user.email;
+        const { path, comment } = this.props.image;
+        this.props.saveToFirebase(path, comment, user);
     }
+
+    renderError() {
+		if (this.props.image.error) {
+			return (
+				<View style={{padding: 10, marginBottom: 10, borderRadius: 5}}>
+					<Text style={{color: 'red', textAlign: 'center', fontSize: 15}}>
+						{this.props.image.error}
+					</Text>
+				</View>
+			)
+		}
+	}
+    
+    renderButton() {
+		if (this.props.image.loading) {
+            return <ActivityIndicator 
+                        size="large" 
+                        color="#338F2F" 
+                        />
+		}
+
+		return (
+			<Button transparent onPress={this.onButtonPress.bind(this)}>
+                <Icon
+                    reverse
+                    raised
+                    name="paper-plane"
+                    type="entypo"
+                    color="#1766FB"
+                    size={25}
+                />
+            </Button>
+		);
+	}
 
     renderViewModal() {
         return (
@@ -82,7 +123,9 @@ class ImagePreview extends Component {
                                 borderLeftWidth: 0,
                                 borderRightWidth: 0,
                                 borderBottomColor: '#efefef',
-                                color: '#000'}}/>
+                                color: '#000'}}
+                            onChangeText={this.onCommentChange.bind(this)} 
+                            value={this.props.comment}/>
                         <Button
                             rounded
                             block
@@ -104,12 +147,9 @@ class ImagePreview extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
-        const imagePath = navigation.state.params.imagePath;
-        console.log('navigation', navigation.state.params.imagePath);
-        console.log('this.props', this.props, this.state);
+		console.log('IMAGE PREVIEW: this.props', this.props);
+        const imagePath = this.props.image.path;
         const images = [ { url: imagePath} ];
-
         return (
             <View style={{ flex: 1 }}>
                 <Container>
@@ -130,6 +170,7 @@ class ImagePreview extends Component {
                                 top: 6,
                                 color: 'white',
                                 fontWeight: 'bold',
+                                fontFamily: 'ArialRoundedMTBold',
                                 fontSize: 17
                             }}>SendFact</Text>
                         </Left>
@@ -142,6 +183,7 @@ class ImagePreview extends Component {
                         </Right>
                     </Header>
                     <ImageViewer style={{height: 400, marginHorizontal: 10, marginTop: 10, marginBottom: 90}} renderIndicator={() => null} imageUrls={images}/>
+                    {/* <Text>{this.props.image.comment}</Text> */}
                     {this.renderViewModal()}
                     <View style={{ 
                             flexDirection: 'row', 
@@ -156,7 +198,7 @@ class ImagePreview extends Component {
                             right: 0, 
                             zIndex: 100, 
                         }}>
-                            <Button transparent onPress={() => this.props.navigation.navigate('Camera')}>                    
+                            <Button transparent onPress={() => this.props.navigation.navigate('Home')}>                    
                                 <Icon
                                     raised
                                     name="chevron-left"
@@ -173,30 +215,19 @@ class ImagePreview extends Component {
                                     color="#828282"
                                     size={25}
                                 /> 
-                            </Button>                        
-                            <Button transparent onPress={() => this.props.navigation.navigate("Validation")}>
-                                <Icon
-                                    reverse
-                                    raised
-                                    name="paper-plane"
-                                    type="entypo"
-                                    color="#1766FB"
-                                    size={25}
-                                />
-                            </Button>
+                            </Button>                   
+                            {this.renderButton()}
                     </View>
+                    {this.renderError()}
                 </Container>
             </View>
         );
     }
 }
 
-export default ImagePreview;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-});
+const mapStateToProps = (state, ownProps) => {
+    console.log(state); // state
+    console.log(ownProps); // undefined
+	return state;
+};
+export default connect(mapStateToProps, { commentChanged, setComment, saveToFirebase })(ImagePreview);

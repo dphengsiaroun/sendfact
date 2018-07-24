@@ -16,23 +16,15 @@ import { Icon } from 'react-native-elements';
 import ValidationCss from './css/ValidationCss';
 
 export default class Validation extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			username: '',
-			password: '',
-			userIsConnected: true,
-		};
-	}
 
 	render() {
 		console.log('profile', this.props.navigation);
 		return (
 			<React.Fragment>
-			<Header style={{backgroundColor: '#efc848'}}>
+			<Header style={{backgroundColor: '#338F2F'}}>
 				<Left/>
 				<Body>
-					<Title style={{color: 'white'}}>Validation</Title>
+					<Title style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>Validation</Title>
 				</Body>
 				<Right>
 					<Icon 
@@ -52,7 +44,7 @@ export default class Validation extends Component {
 				{/* <Image style={ValidationCss.avatar} source={require('../img/checked.png')} />				 */}
 				<Text style={ValidationCss.text}>Facture</Text>
 				<Text style={ValidationCss.name}>envoyée !</Text>
-					<Button block rounded style={ValidationCss.btn} onPress={() => this.props.navigation.navigate('Camera')}>
+					<Button block rounded style={ValidationCss.btn} onPress={() => this.props.navigation.navigate('Home')}>
 						<Icon 
 							name='camera'
 							type="font-awesome"

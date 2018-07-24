@@ -11,6 +11,7 @@ import { Container, Header, Item, Left, Right, Button } from 'native-base';
 import { Icon } from 'react-native-elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux';
+import { setImagePath } from '../actions';
 
 // const flashModeOrder = {
 //     off: 'on',
@@ -23,9 +24,8 @@ import { connect } from 'react-redux';
 class CameraComponent extends Component {
 
     state = {
-        type: Camera.Constants.Type.back,
-        flash: 'off',
-        path: null,
+        // type: Camera.Constants.Type.back,
+        // flash: 'off',
         permissionsGranted: false,
     }
 
@@ -37,19 +37,17 @@ class CameraComponent extends Component {
     takePicture() {
         this.camera.takePictureAsync().then((data) => {
             var imagePath = data.uri;
-            // console.log('imagePath', imagePath);
+            console.log('imagePath', imagePath);
+            this.props.setImagePath(imagePath);
             this.props.navigation.navigate('ImagePreview', {
                 imagePath: imagePath,
               });
          }).catch((err)=> console.error(err));
     }
 
-    addText() {
-        console.log('Add Text');
-    }
-
     renderCamera() {
-		console.log('CAMERA: this.state, this.props', this.state, this.props);
+		console.log('CAMERA: this.props', this.props);
+		console.log('CAMERA: this.state', this.state);
         return (
             <View style={{ flex: 1, }}>
                 <Camera ref={ref => { this.camera = ref; }}
@@ -73,7 +71,8 @@ class CameraComponent extends Component {
                                     top: 6,
                                     color: 'white',
                                     fontWeight: 'bold',
-                                    fontSize: 17
+                                    fontSize: 17,
+                                    fontFamily: 'ArialRoundedMTBold'
                                 }}>SendFact</Text>
                         </Left>
                         <Right>
@@ -104,94 +103,6 @@ class CameraComponent extends Component {
         )
     }
 
-    renderPreviewImage() {
-        return (
-            <Container>
-                <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
-                    <Left>
-                    <Image
-                        source={require('../../assets/logo.png')}
-                        style={{
-                            width: 35,
-                            height: 35,
-                            marginLeft: 5
-                        }}
-                    />
-                    <Text 
-                        style={{
-                            position: 'absolute',
-                            left: 50,
-                            top: 6,
-                            color: 'white',
-                            fontWeight: 'bold',
-                            fontSize: 17
-                        }}>SendFact</Text>
-                    </Left>
-                    <Right>
-                    <Icon
-                        name="menu"
-                        type="feather"
-                        color="white"
-                        onPress={() => this.props.navigation.openDrawer()}/> 
-                    </Right>
-                </Header>
-                <Image
-                    source={{uri : this.state.path}}
-                    style={{
-                        width: '90%',
-                        height: '71%',
-                        marginHorizontal: '5%',
-                        marginTop: '5%',
-                        borderWidth: 5,
-                        borderColor: '#efefef',
-                    }}
-                />
-                <View style={{ 
-                        flexDirection: 'row', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'center', 
-                        marginVertical: '2%', 
-                        paddingHorizontal: 10,
-                        position: 'absolute', 
-                        backgroundColor: '#fff',
-                        left: 0, 
-                        bottom: 10, 
-                        right: 0, 
-                        zIndex: 100, 
-                    }}>
-                        <Button transparent onPress={() => this.setState({ path: null })}>                    
-                        <Icon
-                        raised
-                            name="chevron-left"
-                            type='feather'
-                            color="#828282"
-                            size={25}
-                        />
-                        </Button>                        
-                        <Button transparent onPress={() => this.addText()}>
-                        <Icon
-                        raised
-                            name="pencil"
-                            type="font-awesome"
-                            color="#828282"
-                            size={25}
-                            /> 
-                        </Button>                        
-                        <Button transparent onPress={() => this.props.navigation.navigate("Validation")}>
-                        <Icon
-                            reverse
-                            raised
-                            name="paper-plane"
-                            type="entypo"
-                            color="#1766FB"
-                            size={25}
-                        />
-                        </Button>
-                </View>
-            </Container>
-          );
-    }
-
     render() {
         const { permissionsGranted } = this.state;
         if (permissionsGranted === null) {
@@ -203,16 +114,16 @@ class CameraComponent extends Component {
         else {
             return (
                 <View style={{ flex: 1 }}>
-                  {this.state.path ? this.renderPreviewImage() : this.renderCamera()}
+                  {this.renderCamera()}
                 </View>
             );
         }
     }
 }
 
-const mapStateToProps = ({ auth }) => {
-	const { user, isLoggedIn } = auth;
-	return { user, isLoggedIn };
+const mapStateToProps = ({ image }) => {
+	const { path, error, flash, type } = image;
+	return { path, error, flash, type };
 };
 
-export default connect(mapStateToProps)(CameraComponent);
+export default connect(mapStateToProps, {setImagePath})(CameraComponent);
