@@ -37,7 +37,7 @@ class DrawerMenu extends Component {
                                 style={DrawerMenuCss.iconWithText}
                                 name='user-circle'
                                 type='font-awesome'
-                                color='hsla(46, 84%, 61%, 1)'
+                                color='#338F2F'
                             />
                             <Text style={DrawerMenuCss.text}>Connexion</Text>
                         </TouchableOpacity>
@@ -56,7 +56,7 @@ class DrawerMenu extends Component {
                                 style={DrawerMenuCss.iconWithText}
                                 name='user-plus'
                                 type='font-awesome'
-                                color='hsla(46, 84%, 61%, 1)'
+                                color='#338F2F'
                             />
                             <Text style={DrawerMenuCss.text}>S'inscrire</Text>
                         </TouchableOpacity>
@@ -80,7 +80,7 @@ class DrawerMenu extends Component {
                                     style={DrawerMenuCss.iconWithText}
                                     name='user-circle'
                                     type='font-awesome'
-                                    color='hsla(46, 84%, 61%, 1)'
+                                    color='#338F2F'
                                 />
                                 <Text style={DrawerMenuCss.text}>Mon Profil</Text>
                             </TouchableOpacity>
@@ -128,7 +128,7 @@ class DrawerMenu extends Component {
                                 style={DrawerMenuCss.iconWithText}
                                 name='camera'
                                 type='font-awesome'
-                                color='hsla(46, 84%, 61%, 1)'
+                                color='#338F2F'
                             />
                             <Text style={DrawerMenuCss.text}>Ajouter une facture</Text>
                         </TouchableOpacity>

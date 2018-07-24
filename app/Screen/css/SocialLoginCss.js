@@ -3,12 +3,9 @@ import { StyleSheet } from 'react-native';
 const SocialLoginCss = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
+		// alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#fff',
-		// paddingVertical: 130,
-		// marginHorizontal: 10,
-		// marginVertical: 10,
+		// backgroundColor: '#fff',
 	},
 	header: {
 		fontSize: 24,

@@ -39,19 +39,18 @@ class SocialLogin extends Component {
 						onPress={() => this.props.navigation.openDrawer()}/>
 				</Right>
 			</Header>
-			<View>
+			<View style={SocialLoginCss.container}>
 				<View 
 					style={{
 						paddingVertical: 10, 
 						backgroundColor: '#338F2F',
 						borderTopLeftRadius: 10,
 						borderTopRightRadius: 10,
-						marginTop: 50,
 						marginHorizontal: 10
 					}}>
 					<Text 
 						style={{
-							fontSize: 16, 
+							fontSize: 14, 
 							paddingLeft: 10, 
 							color: 'white',
 							fontFamily: 'ArialRoundedMTBold'
@@ -93,7 +92,9 @@ class SocialLogin extends Component {
 						color: '#828282',
 						backgroundColor: 'white',
 						textAlign: 'center',
-						marginHorizontal: 10
+						marginHorizontal: 10,
+						fontSize: 16,
+						fontFamily: 'ArialRoundedMTBold'
 					}}>ou</Text>
 				<View style={{
 					borderBottomLeftRadius: 10,
@@ -131,7 +132,7 @@ class SocialLogin extends Component {
 							borderWidth: 1,
 							borderColor: '#338F2F'
 						}} 
-						onPress={() => this.props.navigation.navigate('Signin')}>
+						onPress={() => this.props.navigation.navigate('Signup')}>
 							<Text 
 								style={{
 									color: '#338F2F', 

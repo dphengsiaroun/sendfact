@@ -33,7 +33,7 @@ class Profile extends Component {
 		// const username = user.user.email;
 		return (
 			<React.Fragment>
-			<Header style={{backgroundColor: '#338F2F'}}>
+			<Header style={ProfileCss.header}>
 				<Left>
 					<Icon 
 						name="angle-left"
@@ -43,7 +43,7 @@ class Profile extends Component {
 						onPress={() => this.props.navigation.goBack()}/>
 				</Left>
 				<Body>
-					<Title style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>Profile</Title>
+					<Title style={ProfileCss.titleHeader}>Profile</Title>
 				</Body>
 				<Right>
 					<Icon 
@@ -63,7 +63,7 @@ class Profile extends Component {
 							name='camera'
 							type="font-awesome" 
 							color="white"/>
-						<Text style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>Nouvelle facture</Text>
+						<Text style={ProfileCss.textBtn}>Nouvelle facture</Text>
 					</Button>
 					{/* <Button block style={ProfileCss.btnWarning} onPress={() => this.props.navigation.navigate('Signin')}>
 						<Icon 

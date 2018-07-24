@@ -86,7 +86,7 @@ class ImagePreview extends Component {
                 transparent={false}
                 onRequestClose={ () =>  this.ShowModalFunction() }>
                 <View style={{ backgroundColor: '#fff'}}>
-                    <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
+                    <Header style={{ backgroundColor: '#338F2F'}}>
                         <Left>
                             <Button transparent
                                 onPress={() => this.setState({ ModalVisibleStatus: !this.state.ModalVisibleStatus })}>
@@ -98,7 +98,7 @@ class ImagePreview extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title style={{color: 'white', fontSize: 15}}>Commentaire</Title>
+                            <Title style={{color: 'white', fontSize: 15, fontFamily: 'ArialRoundedMTBold'}}>Commentaire</Title>
                         </Body>
                         <Right/>
                     </Header>
@@ -107,7 +107,8 @@ class ImagePreview extends Component {
                         style={{
                             fontSize: 14, 
                             color: '#8996A0',
-                            marginBottom: 15
+                            marginBottom: 15,
+                            fontFamily: 'ArialRoundedMTBold'
                         }}>Ecrivez votre commentaire</Label>
                         <TextInput
                             multiline = {true}
@@ -123,13 +124,14 @@ class ImagePreview extends Component {
                                 borderLeftWidth: 0,
                                 borderRightWidth: 0,
                                 borderBottomColor: '#efefef',
+                                fontFamily: 'ArialRoundedMTBold',
                                 color: '#000'}}
                             onChangeText={this.onCommentChange.bind(this)} 
                             value={this.props.comment}/>
                         <Button
-                            rounded
                             block
                             style={{
+                                backgroundColor: '#338F2F',
                                 paddingHorizontal: 5
                             }}
                             onPress={() => this.addComment()}>
@@ -137,7 +139,8 @@ class ImagePreview extends Component {
                             style={{
                                 color: 'white',
                                 fontWeight: 'bold',
-                                fontSize: 16
+                                fontSize: 16,
+                                fontFamily: 'ArialRoundedMTBold'
                             }}>Ajouter</Text>
                         </Button>
                     </Form>
@@ -153,7 +156,7 @@ class ImagePreview extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <Container>
-                    <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)'}}>
+                    <Header style={{ backgroundColor: '#338F2F'}}>
                         <Left>
                         <Image
                             source={require('../../assets/logo.png')}
@@ -172,7 +175,7 @@ class ImagePreview extends Component {
                                 fontWeight: 'bold',
                                 fontFamily: 'ArialRoundedMTBold',
                                 fontSize: 17
-                            }}>SendFact</Text>
+                            }}>SENDFACT</Text>
                         </Left>
                         <Right>
                         <Icon

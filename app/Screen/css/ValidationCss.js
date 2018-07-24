@@ -18,7 +18,8 @@ const ValidationCss = StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: 30,
 		color: '#222',
-		marginTop: 20
+		marginTop: 20,
+		fontFamily: 'ArialRoundedMTBold'
 	},
     name: {
 		color: '#222',
@@ -27,7 +28,7 @@ const ValidationCss = StyleSheet.create({
 		marginBottom: 40
 	},
 	btn: {
-		backgroundColor: '#2488ff',
+		backgroundColor: '#338F2F',
 		margin: 10
 	},
 	

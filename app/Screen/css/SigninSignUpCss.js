@@ -13,15 +13,16 @@ const SigninSignUpCss = StyleSheet.create({
 		paddingRight: 40,
 	},
 	avatar: {
-		width: 90,
-		height: 90,
+		width: 70,
+		height: 70,
 		marginBottom: 10
 	},
 	header: {
-		fontSize: 24,
+		fontSize: 20,
 		// marginBottom: 60,
 		color: '#222',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		fontFamily: 'ArialRoundedMTBold'
 	},
 	item: {
 		width: 230,
@@ -35,14 +36,15 @@ const SigninSignUpCss = StyleSheet.create({
 		padding: 16,
 		marginBottom: 20,
 		backgroundColor: '#222',
-		borderRadius: 30
+		borderRadius: 30,
+		fontFamily: 'ArialRoundedMTBold'
 	},
 	btn: {	
-		backgroundColor: '#2488ff'
+		backgroundColor: '#338F2F'
 	},
 	btnOutline: {
 		marginTop: 10,
-		borderColor: '#2488ff'
+		borderColor: '#338F2F'
 	}
 });
 

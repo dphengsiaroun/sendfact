@@ -58,8 +58,8 @@ class Signin extends Component {
 		}
 
 		return (
-			<Button block rounded style={SigninSignUpCss.btn} onPress={this.onButtonPress.bind(this)}>
-				<Text style={{color: '#fff'}}>Connexion</Text>
+			<Button block style={SigninSignUpCss.btn} onPress={this.onButtonPress.bind(this)}>
+				<Text style={{color: '#fff', fontSize: 16, fontFamily: 'ArialRoundedMTBold'}}>Connexion</Text>
 			</Button>
 		);
 	}
@@ -94,25 +94,22 @@ class Signin extends Component {
 					<Text style={SigninSignUpCss.header}>Connexion</Text>
 					<Form>
 						<Item style={SigninSignUpCss.item} floatingLabel>
-							<Label style={{color: 'grey'}}>Email</Label>
+							<Label style={{color: '#8996A0', fontFamily: 'ArialRoundedMTBold'}}>Email</Label>
 							<Input 
-								style={{color: 'grey'}} 
+								style={{color: 'black', fontFamily: 'ArialRoundedMTBold'}} 
 								onChangeText={this.onEmailChange.bind(this)} 
 								value={this.props.email}/>
 						</Item>
 						<Item style={SigninSignUpCss.item2} floatingLabel last>
-							<Label style={{color: 'grey'}}>Mot de passe</Label>
+							<Label style={{color: '#8996A0', fontFamily: 'ArialRoundedMTBold'}}>Mot de passe</Label>
 							<Input 
-								style={{color: 'grey'}} 
+								style={{color: 'black', fontFamily: 'ArialRoundedMTBold'}} 
 								secureTextEntry={true} 
 								onChangeText={this.onPasswordChange.bind(this)} 
 								value={this.props.password}/>
 						</Item>
 						{this.renderError()}
 						{this.renderButton()}
-						<Button transparent style={SigninSignUpCss.btnOutline} onPress={() => this.props.navigation.navigate('Signup')}>
-							<Text style={{color: '#2488ff'}}>Pas encore de compte ? S'inscrire.</Text>
-						</Button>
 					</Form>
 				</View>
 			</KeyboardAvoidingView>

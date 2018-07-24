@@ -39,7 +39,8 @@ const DrawerMenuCss = StyleSheet.create({
     text: {
         color: '#8996A0',
         fontSize: 16,
-        marginLeft: 10
+        marginLeft: 15,
+        fontFamily: 'ArialRoundedMTBold'
     },
     textWithIcon: {
         flexDirection: 'row',
@@ -69,15 +70,6 @@ const DrawerMenuCss = StyleSheet.create({
         paddingLeft: 20,
         marginTop: 5,
     },
-    itemSelected: {
-        borderLeftWidth: 7,
-        borderColor: 'hsla(46, 84%, 61%, 1)'
-    },
-    noSelectedItems: {
-        paddingVertical: 15,
-        paddingLeft: 25,
-        marginTop: 5,
-    }
 });
 
 export default DrawerMenuCss;

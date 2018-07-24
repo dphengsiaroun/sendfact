@@ -1,6 +1,15 @@
-import { StyleSheet } from 'react-native';
+import {
+	StyleSheet
+} from 'react-native';
 
 const ProfileCss = StyleSheet.create({
+	header: {
+		backgroundColor: '#338F2F'
+	},
+	titleHeader: {
+		color: 'white',
+		fontFamily: 'ArialRoundedMTBold'
+	},
 	container: {
 		flex: 1,
 		alignItems: 'center',
@@ -14,19 +23,25 @@ const ProfileCss = StyleSheet.create({
 		height: 90,
 		marginBottom: 10
 	},
-    text: {
+	text: {
 		fontWeight: 'bold',
 		fontSize: 30,
 		color: '#222',
+		fontFamily: 'ArialRoundedMTBold'
 	},
-    name: {
+	name: {
 		color: '#222',
 		fontSize: 20,
-		marginBottom: 30
+		marginBottom: 30,
+		fontFamily: 'ArialRoundedMTBold'
 	},
 	btn: {
 		backgroundColor: '#338F2F',
 		margin: 5
+	},
+	textBtn: {
+		color: 'white',
+		fontFamily: 'ArialRoundedMTBold'
 	},
 	btnDanger: {
 		backgroundColor: '#d9534f',
@@ -36,7 +51,7 @@ const ProfileCss = StyleSheet.create({
 		backgroundColor: '#fcc324',
 		margin: 5
 	}
-	
+
 });
 
 export default ProfileCss;

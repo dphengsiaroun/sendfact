@@ -55,7 +55,7 @@ class CameraComponent extends Component {
                         style={{ flex: 1, justifyContent: 'space-between' }} 
                         type={this.state.type} >
 
-                    <Header style={{ backgroundColor: 'hsla(46, 84%, 61%, 1)',}}>
+                    <Header style={{ backgroundColor: '#338F2F',}}>
                         <Left>
                             <Image
                                 source={require('../../assets/logo.png')}
