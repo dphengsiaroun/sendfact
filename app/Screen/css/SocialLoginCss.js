@@ -1,17 +1,26 @@
 import { StyleSheet } from 'react-native';
 
 const SocialLoginCss = StyleSheet.create({
+	header: { 
+		backgroundColor: '#338F2F'
+	},
+	imgHeader: {
+		width: 35,
+		height: 35,
+		marginLeft: 5
+	},
+	textHeader: {
+		position: 'absolute',
+		left: 50,
+		top: 6,
+		color: 'white',
+		fontWeight: 'bold',
+		fontSize: 17,
+		fontFamily: 'ArialRoundedMTBold'
+	},
 	container: {
 		flex: 1,
-		// alignItems: 'center',
 		justifyContent: 'center',
-		// backgroundColor: '#fff',
-	},
-	header: {
-		fontSize: 24,
-		// marginBottom: 60,
-		color: '#222',
-		fontWeight: 'bold'
 	},
 	item: {
 		width: 230,

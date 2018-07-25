@@ -49,7 +49,7 @@ export default class Validation extends Component {
 							name='camera'
 							type="font-awesome"
 							 color="white"/>
-						<Text>Nouvelle facture</Text>
+						<Text style={{color: 'white'}}>Nouvelle facture</Text>
 					</Button>
 			</View>
 			</React.Fragment>

@@ -26,17 +26,20 @@ class SocialLogin extends Component {
 		console.log('SIGNIN: this.props', this.props);
 		return (
 			<React.Fragment>
-			<Header style={{backgroundColor: '#338F2F'}}>
-				<Left/>
-				<Body>
-					<Title style={{color: 'white', fontFamily: 'ArialRoundedMTBold'}}>SendFact</Title>
-				</Body>
+			<Header style={SocialLoginCss.header}>
+				<Left>
+					<Image
+						source={require('../../assets/logo.png')}
+						style={SocialLoginCss.imgHeader}/>
+					<Text 
+						style={SocialLoginCss.textHeader}>SENDFACT</Text>
+				</Left>
 				<Right>
-					<Icon 
+					<Icon
 						name="menu"
 						type='feather'
-						color="white"
-						onPress={() => this.props.navigation.openDrawer()}/>
+						color="#fff"
+						onPress={() => this.props.navigation.openDrawer()}/> 
 				</Right>
 			</Header>
 			<View style={SocialLoginCss.container}>
@@ -50,17 +53,15 @@ class SocialLogin extends Component {
 					}}>
 					<Text 
 						style={{
-							fontSize: 14, 
+							fontSize: 15, 
 							paddingLeft: 10, 
 							color: 'white',
 							fontFamily: 'ArialRoundedMTBold'
 						}}>S'identifier</Text>
 				</View>
 				<View style={{
-					// width: '100%',
 					flexDirection: 'row',
 					alignItems: 'center',
-					// paddingTop: 100,
 					justifyContent: 'space-around',
 					backgroundColor: 'white',
 					marginHorizontal: 10,
@@ -78,7 +79,6 @@ class SocialLogin extends Component {
 						/>
 					<Icon
 						reverse
-						// raised
 						name="facebook"
 						type="font-awesome"
 						color="#3C599B"
