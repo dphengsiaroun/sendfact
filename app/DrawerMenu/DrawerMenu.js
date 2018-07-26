@@ -101,20 +101,20 @@ class DrawerMenu extends Component {
 		console.log('DRAWER_NAV: this.props', this.props);
         return (
         <View style={DrawerMenuCss.menu}>
-             <View style={DrawerMenuCss.avatarContainer}>
-                 <View style={DrawerMenuCss.avatarImage}>
+             <View style={DrawerMenuCss.container}>
+                 <View style={DrawerMenuCss.iconImage}>
                     <Image 
-                        style={DrawerMenuCss.avatar}
+                        style={DrawerMenuCss.icon}
                         source={require('../../assets/logo.png')}
                     />
-                    <Text style={DrawerMenuCss.profile}>SendFact</Text>
+                    <Text style={DrawerMenuCss.title}>SENDFACT</Text>
                     {this.props.isLoggedIn && 
                         <Icon
                             onPress={() => this.signout()}
-                            style={DrawerMenuCss.iconWithText}
+                            style={DrawerMenuCss.iconSignout}
                             name='power-off'
                             type='font-awesome'
-                            color='white'
+                            color='black'
                         />
                     }
                  </View>

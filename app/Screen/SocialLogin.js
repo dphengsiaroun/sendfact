@@ -3,6 +3,7 @@ import {
 	View, 
 	Text,
 	Image,
+	ScrollView,
 	ActivityIndicator
 } from 'react-native';
 import { 
@@ -42,108 +43,66 @@ class SocialLogin extends Component {
 						onPress={() => this.props.navigation.openDrawer()}/> 
 				</Right>
 			</Header>
-			<View style={SocialLoginCss.container}>
-				<View 
-					style={{
-						paddingVertical: 10, 
-						backgroundColor: '#338F2F',
-						borderTopLeftRadius: 10,
-						borderTopRightRadius: 10,
-						marginHorizontal: 10
-					}}>
-					<Text 
+			<ScrollView style={{flex: 1, backgroundColor: '#3DA937'}}>
+				<View style={SocialLoginCss.container}>
+					<View 
+						style={SocialLoginCss.headerCard}>
+						<Text 
+							style={SocialLoginCss.textHeaderCard}>S'identifier avec Google ou Facebook</Text>
+					</View>
+					<View style={SocialLoginCss.blocIconSocial}>
+						<Icon 
+							reverse
+							// raised
+							name="google"
+							type="font-awesome"
+							color="#D44A35"
+							size={30}
+							onPress={() => this.props.navigation.navigate('Profile')}
+							/>
+						<Icon
+							reverse
+							name="facebook"
+							type="font-awesome"
+							color="#3C599B"
+							size={30}
+							onPress={() => this.props.navigation.navigate('Profile')}
+							/>
+					</View>
+					{/* <Text 
 						style={{
-							fontSize: 15, 
-							paddingLeft: 10, 
-							color: 'white',
+							paddingVertical: 30,
+							color: '#828282',
+							backgroundColor: 'white',
+							textAlign: 'center',
+							marginHorizontal: 10,
+							fontSize: 16,
 							fontFamily: 'ArialRoundedMTBold'
-						}}>S'identifier</Text>
+						}}>ou</Text> */}
+					<View 
+						style={SocialLoginCss.headerCard}>
+						<Text 
+							style={SocialLoginCss.textHeaderCard}>S'identifier manuellement</Text>
+					</View>
+					<View style={SocialLoginCss.footerCard}>
+						<Button 
+							block
+							style={SocialLoginCss.btnSigninFooterCard} 
+							onPress={() => this.props.navigation.navigate('Signin')}>
+								<Text 
+									style={SocialLoginCss.textBtnSigninFooterCard}>Connexion manuelle</Text>
+						</Button>
+						<Button 
+							block
+							transparent
+							style={SocialLoginCss.btnSignupFooterCard} 
+							onPress={() => this.props.navigation.navigate('Signup')}>
+								<Text 
+									style={SocialLoginCss.textBtnSignupFooterCard}>Inscription manuelle</Text>
+						</Button>
+					</View>
 				</View>
-				<View style={{
-					flexDirection: 'row',
-					alignItems: 'center',
-					justifyContent: 'space-around',
-					backgroundColor: 'white',
-					marginHorizontal: 10,
-					marginVertical: 0,
-					paddingTop: 30
-				}}>
-					<Icon 
-						reverse
-						// raised
-						name="google"
-						type="font-awesome"
-						color="#D44A35"
-						size={30}
-						onPress={() => this.props.navigation.navigate('Profile')}
-						/>
-					<Icon
-						reverse
-						name="facebook"
-						type="font-awesome"
-						color="#3C599B"
-						size={30}
-						onPress={() => this.props.navigation.navigate('Profile')}
-						/>
-				</View>
-				<Text 
-					style={{
-						paddingVertical: 30,
-						color: '#828282',
-						backgroundColor: 'white',
-						textAlign: 'center',
-						marginHorizontal: 10,
-						fontSize: 16,
-						fontFamily: 'ArialRoundedMTBold'
-					}}>ou</Text>
-				<View style={{
-					borderBottomLeftRadius: 10,
-					borderBottomRightRadius: 10,
-					backgroundColor: 'white',
-					paddingBottom: 20,
-					marginHorizontal: 10
-				}}>
-					
-					<Button 
-						block
-						style={{
-							padding: 10,
-							marginHorizontal: 15,
-							marginVertical: 5,
-							backgroundColor: '#338F2F'
-						}} 
-						onPress={() => this.props.navigation.navigate('Signin')}>
-							<Text 
-								style={{
-									color: '#fff', 
-									fontSize: 16, 
-									textAlign: 'center', 
-									alignContent: 'center',
-									fontFamily: 'ArialRoundedMTBold'
-							}}>Connexion manuelle</Text>
-					</Button>
-					<Button 
-						block
-						transparent
-						style={{
-							padding: 10,
-							marginHorizontal: 15,
-							marginVertical: 5,
-							borderWidth: 1,
-							borderColor: '#338F2F'
-						}} 
-						onPress={() => this.props.navigation.navigate('Signup')}>
-							<Text 
-								style={{
-									color: '#338F2F', 
-									fontSize: 16, 
-									textAlign: 'center', 
-									alignContent: 'center',
-									fontFamily: 'ArialRoundedMTBold'
-							}}>Inscription manuelle</Text>
-					</Button>
-				</View>
-			</View>
+			</ScrollView>
 			</React.Fragment>
 		);
 	}

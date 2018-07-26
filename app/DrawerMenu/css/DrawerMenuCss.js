@@ -10,7 +10,7 @@ const DrawerMenuCss = StyleSheet.create({
         height: height,
         backgroundColor: '#f9f9f9'
     },
-    avatarContainer: {
+    container: {
         backgroundColor: '#338F2F',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -20,21 +20,22 @@ const DrawerMenuCss = StyleSheet.create({
         paddingVertical: 20,
         paddingTop: 40
     },
-    avatar: {
-        width: 45,
-        height: 45,
+    icon: {
+        width: 40,
+        height: 40,
         marginRight: 5
     },
-    avatarImage: {
+    iconImage: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    profile: {
+    title: {
         color: '#fff',
-        fontSize: 23,
+        fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginRight: 55
+        marginRight: 55,
+        fontFamily: 'ArialRoundedMTBold'
     },
     text: {
         color: '#8996A0',
@@ -61,7 +62,7 @@ const DrawerMenuCss = StyleSheet.create({
     rightIcon: {
         paddingRight: 20,
     },
-    iconWithText: {
+    iconSignout: {
         marginRight: 10,
         paddingLeft: 20
     },

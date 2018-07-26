@@ -22,19 +22,64 @@ const SocialLoginCss = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 	},
-	item: {
-		width: 230,
+	headerCard: {
+		paddingVertical: 10, 
+		backgroundColor: '#338F2F',
+		borderTopLeftRadius: 10,
+		borderTopRightRadius: 10,
+		marginHorizontal: 10,
+		marginTop: 40
 	},
-	item2: {
-		width: 230,
-		marginBottom: 10,
+	textHeaderCard: {
+		fontSize: 15, 
+		paddingLeft: 10, 
+		color: 'white',
+		fontFamily: 'ArialRoundedMTBold'
 	},
-	textInput: {
-		alignSelf: 'stretch',
-		padding: 16,
-		marginBottom: 20,
-		backgroundColor: '#222',
-		borderRadius: 30
+	blocIconSocial: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		backgroundColor: 'white',
+		marginHorizontal: 10,
+		paddingVertical: 20,
+		borderBottomLeftRadius: 10,
+		borderBottomRightRadius: 10,
+	},
+	footerCard: {
+		borderBottomLeftRadius: 10,
+		borderBottomRightRadius: 10,
+		backgroundColor: 'white',
+		paddingBottom: 20,
+		paddingVertical: 20,
+		marginHorizontal: 10
+	},
+	btnSigninFooterCard: {
+		padding: 10,
+		marginHorizontal: 15,
+		marginVertical: 5,
+		backgroundColor: '#338F2F'
+	},
+	textBtnSigninFooterCard: {
+		color: '#fff', 
+		fontSize: 16, 
+		textAlign: 'center', 
+		alignContent: 'center',
+		fontFamily: 'ArialRoundedMTBold'
+	},
+	btnSignupFooterCard: {
+		padding: 10,
+		marginHorizontal: 15,
+		marginVertical: 5,
+		borderWidth: 1,
+		borderColor: '#338F2F'
+	},
+	textBtnSignupFooterCard: {
+		color: '#338F2F', 
+		fontSize: 16, 
+		textAlign: 'center', 
+		alignContent: 'center',
+		fontFamily: 'ArialRoundedMTBold'
 	},
 });
 
